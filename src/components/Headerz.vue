@@ -25,15 +25,6 @@
     >
       <q-list>
         <q-item-label header>Sidebar</q-item-label>
-        <q-item clickable tag="a" href="/#/mainmenu">
-          <q-item-section avatar>
-            <q-icon name="dashboard" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Dashboard</q-item-label>
-            <q-item-label caption>Main Menu</q-item-label>
-          </q-item-section>
-        </q-item>
         <q-item clickable tag="a" href="/#/berita">
           <q-item-section avatar>
             <q-icon name="cloud_upload" />
@@ -48,8 +39,26 @@
             <q-icon name="cloud_upload" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Assesment</q-item-label>
-            <q-item-label caption>Upload Assesment</q-item-label>
+            <q-item-label>KSSK</q-item-label>
+            <q-item-label caption>Upload Dokumen KSSK</q-item-label>
+          </q-item-section>
+        </q-item>
+         <q-item clickable tag="a" href="/#/rdkb">
+          <q-item-section avatar>
+            <q-icon name="cloud_upload" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>RDKB</q-item-label>
+            <q-item-label caption>Upload Data RDKB</q-item-label>
+          </q-item-section>
+        </q-item>
+         <q-item clickable tag="a" href="/#/rdkm">
+          <q-item-section avatar>
+            <q-icon name="cloud_upload" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>RDKM</q-item-label>
+            <q-item-label caption>Upload Data RDKM</q-item-label>
           </q-item-section>
         </q-item>
         <q-item clickable tag="a" href="/#/history">
