@@ -1,6 +1,6 @@
 <template>
 
-    <div class="flex flex-center">
+    <div class="flex flex-center" style="padding-top: 80px">
       {{userNoww}}
       <div class="q-pa-md" style="max-width: 350px; width:100%;text-align:center;">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
@@ -85,8 +85,9 @@ export default {
               message: "You're Logged In"
             });
             self.$ls.set("userNow", result.id);
+            self.$ls.set("username", result.username);
             console.log("id nya dia = ", self.$ls.get("userNow"))
-            self.$router.push("mainmenu");
+            self.$router.push("berita");
           }
           return result;
         })

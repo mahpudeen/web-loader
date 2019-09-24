@@ -2,7 +2,7 @@
 
     <div class="flex flex-center">
       <div class="q-pa-md" style="max-width: 500px; width:100%">
-        <h3 style="text-align:center;">Upload Dokumen KSSK</h3>
+        <h4 style="text-align:center;">Upload Dokumen KSSK</h4>
         <q-form class="q-gutter-md">
   
           <q-input
@@ -242,6 +242,7 @@
 
 <script>
 import {upload}  from '../api/upload/index';
+import history  from '../api/history/index';
 import {uploadKSSK}  from '../api/upload/index';
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 
@@ -261,7 +262,9 @@ export default {
       string : 'string',
       nameFile : '',
       waitedFormData: '',
-      waitedFormDataPdf: ''
+      waitedFormDataPdf: '',
+      filesImage: '',
+      filesPdf: ''
 
 
     };
@@ -302,6 +305,13 @@ export default {
         // upload data to the server
         this.currentStatus = STATUS_SAVING;
 
+        history.saveHistory(window, this.$ls.get("username"), this.nameFile, 'Materi Rapat KSSK' ).then(function (images) {
+          return images;
+        }).catch(function (err) {
+          console.log(err)
+        });
+
+
         uploadKSSK(formData)
           .then(x => {
             this.uploadedFiles = [].concat(x);
@@ -335,12 +345,14 @@ export default {
           .from(Array(fileList.length).keys())
           .map(x => {
             let newNameFile = this.nameFile + '.png'
+            this.filesImage = newNameFile
             formData.append(fieldName, fileList[x], newNameFile);
           });
 
         // save it
 
         this.waitedFormData = formData
+        
       },
 
       filesChangePdf(fieldName, fileList) {
@@ -355,6 +367,7 @@ export default {
           .from(Array(fileList.length).keys())
           .map(x => {
             let newNameFile = this.nameFile + '.pdf'
+            this.filesPdf = newNameFile
             formData.append(fieldName, fileList[x], newNameFile);
           });
 

@@ -25,9 +25,9 @@ export default {
     return {
       columns: [
         { name: 'date', align: 'center', label: 'Date', field: 'date', sortable: true },
-        { name: 'files', align: 'center', label: 'Files', field: 'files' },
-        { name: 'category', align: 'center', label: 'Category', field: 'category' },
-        { name: 'uploader', align: 'center', label: 'Uploader', field: 'uploader' }
+        { name: 'files', align: 'center', label: 'Category', field: 'login' },
+        { name: 'category', align: 'center', label: 'Status', field: 'uploader' },
+        { name: 'uploader', align: 'center', label: 'User', field: 'uploader' }
        ],
       data: []
     }

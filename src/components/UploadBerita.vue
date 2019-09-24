@@ -2,14 +2,14 @@
 
     <div class="flex flex-center">
       <div class="q-pa-md" style="max-width: 500px; width:100%">
-        <h3 style="text-align:center;">Upload Berita</h3>
+        <h4 style="text-align:center;">Upload Berita</h4>
         <q-form class="q-gutter-md">
   
           <q-input
             filled
             v-model="nameFile"
             label="Nama File"
-            hint="Contoh: 2016-12-01 Rapat Stabilitas Sistem Keuangan Triwulan IV - 2016"
+            hint="Contoh: 2016-12-01 Monitoring Berita Harian 10 September 2019"
             lazy-rules
             :rules="[ val => val && val.length > 0 || 'Please type something']"
           />
@@ -243,6 +243,7 @@
 <script>
 import {upload}  from '../api/upload/index';
 import {uploadNews}  from '../api/upload/index';
+import history  from '../api/history/index';
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 
 export default {
@@ -301,6 +302,12 @@ export default {
       save(formData, formDataPdf) {
         // upload data to the server
         this.currentStatus = STATUS_SAVING;
+
+        history.saveHistory(window, this.$ls.get("username"), this.nameFile, 'Monitoring Berita Harian' ).then(function (images) {
+          return images;
+        }).catch(function (err) {
+          console.log(err)
+        });
 
         uploadNews(formData)
           .then(x => {

@@ -34,7 +34,7 @@
             <q-item-label caption>Upload Berita</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" href="/#/assesment">
+        <q-item clickable tag="a" href="/#/kssk">
           <q-item-section avatar>
             <q-icon name="cloud_upload" />
           </q-item-section>
@@ -68,6 +68,15 @@
           <q-item-section>
             <q-item-label>History</q-item-label>
             <q-item-label caption>History Upload</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item clickable tag="a" href="/#/history-audit-trail">
+          <q-item-section avatar>
+            <q-icon name="history" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Audit Trail</q-item-label>
+            <q-item-label caption>Audit Trail Event History</q-item-label>
           </q-item-section>
         </q-item>
         <q-item clickable tag="a"  @click="logout()">

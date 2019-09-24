@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
-      <headerz v-if="['mainmenu', 'history', 'uploadassesment', 'uploadberita','uploadrdkm','uploadrdkb'].indexOf($route.name) > -1"/>
+      <headerz v-if="['mainmenu', 'history', 'uploadassesment', 'uploadberita','uploadrdkm','uploadrdkb', 'historyAuditTrail'].indexOf($route.name) > -1"/>
       <headery v-if="['login'].indexOf($route.name) > -1"/>
       <router-view />
     </q-page-container>
