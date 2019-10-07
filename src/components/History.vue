@@ -37,6 +37,7 @@ export default {
     const self = this;
 
     history.getHistory(window).then(function (result) {
+      console.log('ini result', result)
       return result;
     }).then(function (datas) {
       console.log(datas)

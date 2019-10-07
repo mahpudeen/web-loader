@@ -8,7 +8,7 @@ export default {
     saveHistory(window, uploader, files, category){
 
         return getApiNoAuth()
-        .post('http://localhost:3001/api/Histories', {
+        .post('http://localhost:80/api/Histories', {
             uploader : uploader,
             files : files,
             category : category
