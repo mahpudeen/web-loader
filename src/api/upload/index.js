@@ -1,10 +1,10 @@
 
 import * as axios from 'axios';
 
-const BASE_URL_KSSK = 'http://localhost:80/api/kssk';
-const BASE_URL_NEWS = 'http://localhost:80/api/news';
-const BASE_URL_RDKB = 'http://localhost:80/api/rdkb';
-const BASE_URL_RDKM = 'http://localhost:80/api/rdkm';
+const BASE_URL_KSSK = 'https://exist.ojk.go.id/api/kssk';
+const BASE_URL_NEWS = 'https://exist.ojk.go.id/api/news';
+const BASE_URL_RDKB = 'https://exist.ojk.go.id/api/rdkb';
+const BASE_URL_RDKM = 'https://exist.ojk.go.id/api/rdkm';
 
 function upload(formData,id) {
   const url = `${BASE_URL}/${id}/upload`;
