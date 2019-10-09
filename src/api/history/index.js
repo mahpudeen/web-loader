@@ -8,7 +8,7 @@ export default {
     saveHistory(window, uploader, files, category){
 
         return getApiNoAuth()
-        .post('http://localhost:80/api/Histories', {
+        .post('https://exist.ojk.go.id/api/Histories', {
             uploader : uploader,
             files : files,
             category : category
