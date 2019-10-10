@@ -6,6 +6,7 @@ import UploadRDKM from '@/components/UploadRDKM.vue';
 import UploadRDKB from '@/components/UploadRDKB.vue';
 import History from '@/components/History.vue';
 import HistoryAuditTrail from '@/components/HistoryAuditTrail.vue';
+import userManagement from '@/components/UserManagement.vue';
 
 
 const routes = [
@@ -17,7 +18,7 @@ const routes = [
     { path: '/rdkm', component: UploadRDKM, name:'uploadrdkm'},
     { path: '/rdkb', component: UploadRDKB, name:'uploadrdkb'},
     { path: '/history-audit-trail', component: HistoryAuditTrail, name:'historyAuditTrail'},
-
+    { path: '/user-management', component: userManagement, name:'userManagement'},
 
 ];
 

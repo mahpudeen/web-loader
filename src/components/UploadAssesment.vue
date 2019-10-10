@@ -344,7 +344,7 @@ export default {
         Array
           .from(Array(fileList.length).keys())
           .map(x => {
-            let newNameFile = this.nameFile + '.png'
+            let newNameFile = this.nameFile + '.jpg'
             this.filesImage = newNameFile
             formData.append(fieldName, fileList[x], newNameFile);
           });

@@ -79,6 +79,15 @@
             <q-item-label caption>Audit Trail Event History</q-item-label>
           </q-item-section>
         </q-item>
+        <q-item clickable tag="a" href="/#/user-management">
+          <q-item-section avatar>
+            <q-icon name="user-management" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>User Management</q-item-label>
+            <q-item-label caption>User Management</q-item-label>
+          </q-item-section>
+        </q-item>
         <q-item clickable tag="a"  @click="logout()">
           <q-item-section avatar>
             <q-icon name="exit_to_app" />
