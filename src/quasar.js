@@ -28,7 +28,12 @@ import {
   QCardSection,
   QCardActions,
   QFooter,
-  Notify
+  Notify,
+  QToggle,
+  QSelect,
+  QDialog,
+  QCheckbox,
+  QSlider
 } from 'quasar'
 
 Vue.use(Quasar, {
@@ -57,7 +62,12 @@ Vue.use(Quasar, {
     QTd,
     QCard,
     QCardSection,
-    QCardActions
+    QCardActions,
+    QToggle,
+    QSelect,
+    QDialog,
+    QCheckbox,
+    QSlider
   },
   directives: {
   },
