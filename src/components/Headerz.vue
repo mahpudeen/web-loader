@@ -61,6 +61,15 @@
             <q-item-label caption>Upload Data RDKM</q-item-label>
           </q-item-section>
         </q-item>
+        <q-item clickable tag="a" href="/#/data-manual">
+          <q-item-section avatar>
+            <q-icon name="cloud_upload" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Data Manual</q-item-label>
+            <q-item-label caption>Upload Data Manual</q-item-label>
+          </q-item-section>
+        </q-item>
         <q-item clickable tag="a" href="/#/history">
           <q-item-section avatar>
             <q-icon name="history" />

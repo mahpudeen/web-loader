@@ -9,8 +9,8 @@
       <q-input
         filled
         v-model="name"
-        label="Nama *"
-        hint="Nama Lengkap"
+        label="Username / email *"
+        hint="Username atau email ojk"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
       />

@@ -14,9 +14,9 @@
           <q-icon name="search" />
         </template>
       </q-input>
-      <q-btn color="primary" icon="add" label="New User" @click="openNewUser()"/>
-      <q-btn color="primary" icon="people" label="List Roles" @click="openListUser()"/>
-      <q-btn color="primary" icon="refresh" label="Refresh" />
+      <q-btn color="black" icon="add" label="New User" @click="openNewUser()"/>
+      <q-btn color="black" icon="people" label="List Roles" @click="openListUser()"/>
+      <q-btn color="black" icon="refresh" label="Refresh" />
 
         <q-list bordered class="rounded-borders" v-if="!isNewUser">
             <q-item-label header>Please fill the information</q-item-label>
@@ -334,8 +334,8 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Cancel" color="primary" v-close-popup @click="closePopUp()"/>
-          <q-btn flat label="Apply" color="primary" v-close-popup @click="closePopUp()" />
+          <q-btn flat label="Cancel" color="black" v-close-popup @click="closePopUp()"/>
+          <q-btn flat label="Apply" color="black" v-close-popup @click="closePopUp()" />
         </q-card-actions>
       </q-card>
     </q-dialog>
