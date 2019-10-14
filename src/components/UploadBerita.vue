@@ -17,13 +17,10 @@
           <div class="modal-body">
                 <!--UPLOAD-->
             <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-              <div class="dropbox">
-                <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file">
+              <div>
+                <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="dropbox">
                 <p v-if="isInitial">
-                  Drag your image file(s) here to begin<br> or click to browse
-                </p>
-                <p v-if="isSaving">
-                  Uploading {{ fileCount }} files...
+                  Drag your image file(s) into the box to begin
                 </p>
               </div>
             </form>
@@ -37,10 +34,10 @@
           <div class="modal-body">
                 <!--UPLOAD-->
             <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-              <div class="dropbox">
-                <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChangePdf($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept=".pdf" class="input-file">
+              <div>
+                <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChangePdf($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept=".pdf" class="dropbox">
                 <p v-if="isInitial">
-                  Drag your PDF file(s) here to begin<br> or click to browse
+                  Drag your PDF file(s) into the box to begin
                 </p>
                 <p v-if="isSaving">
                   Uploading {{ fileCount }} files...
@@ -87,10 +84,7 @@
 
   .input-file {
     opacity: 0; /* invisible but it's there! */
-    width: 100%;
-    height: 200px;
-    position: absolute;
-    cursor: pointer;
+    
   }
 
   .dropbox:hover {
@@ -255,8 +249,8 @@ export default {
       lorem: "",
       ipsum: "",
       uploadedFiles: [],
-      uploadError: null,
-      currentStatus: null,
+      uploadError: "",
+      currentStatus: "",
       uploadFieldName: 'photos',
       name : 'testing',
       string : 'string',
