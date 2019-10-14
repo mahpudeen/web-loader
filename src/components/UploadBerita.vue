@@ -18,7 +18,7 @@
                 <!--UPLOAD-->
             <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
               <div class="dropbox">
-                <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*, .pdf" class="input-file">
+                <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file">
                 <p v-if="isInitial">
                   Drag your image file(s) here to begin<br> or click to browse
                 </p>
@@ -38,7 +38,7 @@
                 <!--UPLOAD-->
             <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
               <div class="dropbox">
-                <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChangePdf($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*, .pdf" class="input-file">
+                <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChangePdf($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept=".pdf" class="input-file">
                 <p v-if="isInitial">
                   Drag your PDF file(s) here to begin<br> or click to browse
                 </p>

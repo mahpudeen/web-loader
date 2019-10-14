@@ -18,7 +18,7 @@
                 <!--UPLOAD-->
             <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
               <div class="dropbox">
-                <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*, .pdf" class="input-file">
+                <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept=".xls, .xlsx" class="input-file">
                 <p v-if="isInitial">
                   Drag your data file(s) here to begin<br> or click to browse
                 </p>
@@ -35,7 +35,7 @@
           </div>
 
           <div>
-            <q-btn label="Submit" type="submit" color="black"/>
+            <q-btn label="Submit" type="submit" color="black" />
             <q-btn label="Reset" type="reset" color="black" flat class="q-ml-sm" @click="reset"/>
           </div>
         </q-form>
