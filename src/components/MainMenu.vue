@@ -13,7 +13,7 @@
             <div class="text-h6">Berita</div>
             <div class="text-subtitle2">Upload Berita</div>
         </q-card-section>
-
+ 
         <q-card-section>
             <img src="../assets/logo.png" alt="Logo Tekno" height="150" width="150" margin="20px" />
         </q-card-section>
