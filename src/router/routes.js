@@ -9,7 +9,7 @@ import History from '@/components/History.vue';
 import NewAuditTrail from '@/components/NewAuditTrail.vue';
 import userManagement from '@/components/UserManagement.vue';
 import UploadDataManual from '@/components/UploadDataManual.vue';
-
+ 
 const routes = [
     { path: '/', component: Login, name:'login'},
     { path: '/mainmenu', component: MainMenu, name:'mainmenu'},

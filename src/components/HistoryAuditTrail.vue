@@ -31,7 +31,7 @@ export default {
       data: []
     }
   },
-
+ 
   beforeCreate() {
     const self = this;
 
