@@ -97,6 +97,24 @@
             <q-item-label caption>User Management</q-item-label>
           </q-item-section>
         </q-item>
+        <q-item clickable tag="a" href="/#/ETL-Runner">
+          <q-item-section avatar>
+            <q-icon name="schedule" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>ETL</q-item-label>
+            <q-item-label caption>ETL Data Runner</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item clickable tag="a" href="/#/dashboard">
+          <q-item-section avatar>
+            <q-icon name="show_chart" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Dashboard</q-item-label>
+            <q-item-label caption>ETL Dashboard</q-item-label>
+          </q-item-section>
+        </q-item>
         <q-item clickable tag="a"  @click="logout()">
           <q-item-section avatar>
             <q-icon name="exit_to_app" />
