@@ -5,7 +5,8 @@ import UploadBerita from '@/components/UploadBerita.vue';
 import UploadRDKM from '@/components/UploadRDKM.vue';
 import UploadRDKB from '@/components/UploadRDKB.vue';
 import History from '@/components/History.vue';
-import HistoryAuditTrail from '@/components/HistoryAuditTrail.vue';
+//import HistoryAuditTrail from '@/components/HistoryAuditTrail.vue';
+import NewAuditTrail from '@/components/NewAuditTrail.vue';
 import userManagement from '@/components/UserManagement.vue';
 import UploadDataManual from '@/components/UploadDataManual.vue';
 
@@ -17,7 +18,8 @@ const routes = [
     { path: '/berita', component: UploadBerita, name:'uploadberita'},
     { path: '/rdkm', component: UploadRDKM, name:'uploadrdkm'},
     { path: '/rdkb', component: UploadRDKB, name:'uploadrdkb'},
-    { path: '/history-audit-trail', component: HistoryAuditTrail, name:'historyAuditTrail'},
+//    { path: '/history-audit-trail', component: HistoryAuditTrail, name:'historyAuditTrail'},
+    { path: '/history-audit-trail', component: NewAuditTrail, name:'NewAuditTrail'},
     { path: '/user-management', component: userManagement, name:'userManagement'},
     { path: '/data-manual', component: UploadDataManual, name:'uploadDataManual'}
 
