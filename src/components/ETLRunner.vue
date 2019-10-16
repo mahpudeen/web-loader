@@ -351,6 +351,7 @@ export default {
             if (this[`percentage${id}`] >= 100) {
               clearInterval(this[`interval${id}`])
               this[`loading${id}`] = false
+              this.$router.go('/ETL-Runner');
             }
           }, 700)
         },
@@ -376,7 +377,6 @@ export default {
 
         etl.changeFlag(Taskname).then(function (result) {
           return result;
-          self.$router.go('/ETL-Runner');
         }).catch(function (err) {
           console.log(err)
         });
