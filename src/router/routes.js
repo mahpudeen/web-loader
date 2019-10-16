@@ -9,11 +9,17 @@ import History from '@/components/History.vue';
 import NewAuditTrail from '@/components/NewAuditTrail.vue';
 import userManagement from '@/components/UserManagement.vue';
 import UploadDataManual from '@/components/UploadDataManual.vue';
+<<<<<<< HEAD
 
 import ETLRunner from '@/components/ETLRunner.vue';
 import Dashboard from '@/components/Dashboard.vue';
 
 
+=======
+import ETLRunner from '@/components/ETLRunner.vue';
+import Dashboard from '@/components/Dashboard.vue';
+
+>>>>>>> c30aac93d068249beecc0c3b1971483b12eb476f
 const routes = [
     { path: '/', component: Login, name:'login'},
     { path: '/mainmenu', component: MainMenu, name:'mainmenu'},
