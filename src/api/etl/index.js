@@ -13,5 +13,18 @@ export default {
         }).catch(function(err){
             console.log(err)
         })
+    },
+
+
+    changeFlag(TaskName){
+        return getApiNoAuth()
+        .put('runETLs/changeFlag', {
+            TaskName : TaskName}
+            )
+        .then(function (response){
+            return response.data
+        }).catch(function(err){
+            console.log(err)
+        })
     }
 }

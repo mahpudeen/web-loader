@@ -14,7 +14,6 @@ export default {
             category : category
           })
         .then(function (response){
-            console.log(response)
             return response.data
         }).catch(function(err){
             console.log(err)
@@ -26,7 +25,6 @@ export default {
         return getApiNoAuth()
         .get('Histories')
         .then(function (response){
-            console.log(response)
             return response.data
         }).catch(function(err){
             console.log(err)

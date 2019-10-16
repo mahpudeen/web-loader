@@ -1,7 +1,6 @@
 <template>
 
  <div class="q-pa-md q-gutter-md">
-       <h4 style="text-align:center; margin-top: 5%">ETL Data Runner</h4>
 
 
             <q-list bordered class="rounded-borders" style="max-width: 100%">
@@ -10,8 +9,21 @@
 
                 <div v-for="item in data">
                     <q-item style="border-bottom: 1px solid #d9d9d9">
-                        <q-item-section avatar top>
-                        <q-icon name="fab fa-github" color="black" size="34px" />
+                    
+                        <q-item-section top side>
+                        <div class="text-grey-7 q-gutter-xs">
+                            <q-btn v-if="item.ProcessStage == null" size="12px" flat dense round icon="fiber_manual_record" color="grey"/>
+                            <q-btn v-if="item.ProcessStage == 'R'" size="12px" flat dense round icon="fiber_manual_record" color="yellow"/>
+                            <q-btn v-if="item.ProcessStage == 'F'" size="12px" flat dense round icon="fiber_manual_record" color="green"/>
+                            <q-btn v-if="item.ProcessStage == 'E'" size="12px" flat dense round icon="fiber_manual_record" color="red"/>
+                        </div>
+                        </q-item-section>
+
+                        <q-item-section top class="col-1 gt-sm" style="font-size: 16px; font-weight: bold">
+                            <q-item-label v-if="item.ProcessStage == null" class="q-mt-sm" style="color: grey">Initiate</q-item-label>
+                            <q-item-label v-if="item.ProcessStage == 'R'" class="q-mt-sm" style="color: yellow">Running</q-item-label>
+                            <q-item-label v-if="item.ProcessStage == 'F'" class="q-mt-sm" style="color: green">Finished</q-item-label>
+                            <q-item-label v-if="item.ProcessStage == 'E'" class="q-mt-sm" style="color: red">Error</q-item-label>
                         </q-item-section>
 
                         <q-item-section top class="col-4 gt-sm">
@@ -31,33 +43,20 @@
                             <q-item-label lines="1">
                                 <span class="text-weight-medium">File Name</span>
                             </q-item-label>
-                            <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase">
+                            <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary">
                                 <span class="cursor-pointer">{{item.ExcelFileName}}</span>
                             </q-item-label>
                         </q-item-section>
 
+    
                         <q-item-section top side>
                         <div class="text-grey-7 q-gutter-xs">
-                            <q-btn v-if="item.ProcessStage == 'NULL'" size="12px" flat dense round icon="fiber_manual_record" color="grey"/>
-                            <q-btn v-if="item.ProcessStage == 'R'" size="12px" flat dense round icon="fiber_manual_record" color="yellow"/>
-                            <q-btn v-if="item.ProcessStage == 'F'" size="12px" flat dense round icon="fiber_manual_record" color="green"/>
-                            <q-btn v-if="item.ProcessStage == 'E'" size="12px" flat dense round icon="fiber_manual_record" color="red"/>
-                        </div>
-                        </q-item-section>
-
-                        <q-item-section top class="col-1 gt-sm" style="font-size: 16px; font-weight: bold">
-                            <q-item-label v-if="item.ProcessStage == 'NULL'" class="q-mt-sm" style="color: grey">Initiate</q-item-label>
-                            <q-item-label v-if="item.ProcessStage == 'R'" class="q-mt-sm" style="color: yellow">Running</q-item-label>
-                            <q-item-label v-if="item.ProcessStage == 'F'" class="q-mt-sm" style="color: green">Finished</q-item-label>
-                            <q-item-label v-if="item.ProcessStage == 'E'" class="q-mt-sm" style="color: red">Error</q-item-label>
-                        </q-item-section>
-
-                        <q-item-section top side>
-                        <div class="text-grey-7 q-gutter-xs">
-                            <q-btn class="gt-xs" size="12px" flat dense round icon="play_circle_filled" @click="basic = true" />
+                            <q-btn v-if="item.ProcessFlag === '0'" :loading="loading2" :percentage="percentage2" class="gt-xs" size="12px" flat dense round icon="play_circle_filled" @click="changeFlag(item.TaskName, 2)"/>
+                            <q-btn v-if="item.ProcessFlag === '1'" :loading="loading2" :percentage="percentage2" class="gt-xs" size="12px" flat dense round icon="play_circle_filled" @click="changeFlag(item.TaskName, 2)" disable/>
                             <q-btn class="gt-xs" size="12px" flat dense round icon="cloud_upload" @click="basic = true" />
                             <q-btn size="12px" flat dense round icon="more_vert" />
                         </div>
+            
                         </q-item-section>
                     </q-item>
                 </div>
@@ -71,7 +70,6 @@
                 <q-card>
                     <q-card-section>
                         <div class="text-h6"> Upload Data Excel</div>
-                        <div class="text-h7" style="color: green"> Muhamad Rizki </div>
                     </q-card-section>
 
                         <div class="flex flex-center">
@@ -114,7 +112,7 @@
                 
                     <q-card-actions align="right">
                         <q-btn flat label="Cancel" color="black" @click="closePopUp()"/>
-                        <q-btn flat label="Apply" type="submit" color="black" @click="closePopUp()" />
+                        <q-btn flat label="Apply" type="submit" color="black" @click="submit(waitedFormData)" />
                     </q-card-actions>
                 </q-card>
             </q-dialog>
@@ -302,7 +300,7 @@
 
 <script>
 import {upload}  from '../api/upload/index';
-import {uploadNews}  from '../api/upload/index';
+import {uploadDataManual}  from '../api/upload/index';
 import history  from '../api/history/index';
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 
@@ -323,13 +321,43 @@ export default {
             string : 'string',
             nameFile : '1. Overview New.xlsx',
             waitedFormData: '',
-            waitedFormDataPdf: ''
+            loading1: false,
+            percentage1: 0,
+
+            loading2: false,
+            percentage2: 0,
+
+            loading3: false,
+            percentage3: 0,
+
+            alert: false,
+            confirm: false,
+            prompt: false,
+
+            address: ''
         }
     },
 
     methods: {
         closePopUp() {
           this.basic = false
+        },
+
+        startComputing (id) {
+          this[`loading${id}`] = true
+          this[`percentage${id}`] = 0
+          this[`interval${id}`] = setInterval(() => {
+            this[`percentage${id}`] += Math.floor(Math.random() * 8 + 20)
+            if (this[`percentage${id}`] >= 100) {
+              clearInterval(this[`interval${id}`])
+              this[`loading${id}`] = false
+            }
+          }, 700)
+        },
+
+        beforeDestroy () {
+          clearInterval(this.interval1)
+          clearInterval(this.interval2)
         },
 
         reset() {
@@ -340,17 +368,31 @@ export default {
         this.nameFile = ''
       },
 
-      save(formData, formDataPdf) {
+      changeFlag(Taskname, id) {
+
+        let self = this
+
+        self.startComputing(id)
+
+        etl.changeFlag(Taskname).then(function (result) {
+          return result;
+        }).catch(function (err) {
+          console.log(err)
+        });
+      },
+
+      save(formData) {
         // upload data to the server
         this.currentStatus = STATUS_SAVING;
 
         history.saveHistory(window, this.$ls.get("username"), this.nameFile, 'Monitoring Berita Harian' ).then(function (images) {
+          this.basic = false
           return images;
         }).catch(function (err) {
           console.log(err)
         });
 
-        uploadNews(formData)
+        uploadDataManual(formData)
           .then(x => {
             this.uploadedFiles = [].concat(x);
             this.currentStatus = STATUS_SUCCESS;
@@ -360,15 +402,7 @@ export default {
             this.currentStatus = STATUS_FAILED;
           });
 
-        uploadNews(formDataPdf)
-        .then(x => {
-          this.uploadedFiles = [].concat(x);
-          this.currentStatus = STATUS_SUCCESS;
-        })
-        .catch(err => {
-          this.uploadError = err.response;
-          this.currentStatus = STATUS_FAILED;
-        });
+          
       },
 
       filesChange(fieldName, fileList) {
@@ -382,7 +416,7 @@ export default {
         Array
           .from(Array(fileList.length).keys())
           .map(x => {
-            let newNameFile = this.nameFile + '.jpg'
+            let newNameFile = this.nameFile + '.xlsx'
             formData.append(fieldName, fileList[x], newNameFile);
           });
 
@@ -391,28 +425,14 @@ export default {
         this.waitedFormData = formData
       },
 
-      filesChangePdf(fieldName, fileList) {
+      submit(waitedFormData) {
         
-        // handle file changes
-        const formData = new FormData();
-
-        if (!fileList.length) return;
-
-        // append the files to FormData
-        Array
-          .from(Array(fileList.length).keys())
-          .map(x => {
-            let newNameFile = this.nameFile + '.pdf'
-            formData.append(fieldName, fileList[x], newNameFile);
-          });
-
-        // save it
-
-        this.waitedFormDataPdf = formData
-      },
-      submit(waitedFormData, waitedFormDataPdf) {
-        
-        this.save(waitedFormData, waitedFormDataPdf);
+        this.save(waitedFormData);
+        this.closePopUp();
+        this.currentStatus = STATUS_INITIAL;
+        this.uploadedFiles = [];
+        this.uploadError = null;
+        this.nameFile = ''
       }
         
     },
@@ -436,6 +456,19 @@ export default {
         }).catch(function (err) {
           console.log(err)
         });
+      },
+
+      getData() {
+        const self = this;
+
+        etl.getETLDatas(window).then(function (result) {
+            return result;
+        }).then(function (datas) {
+            self.data = datas;
+            return datas;
+        }).catch(function (err) {
+            console.log(err)
+        });
       }
     },
 
@@ -443,7 +476,6 @@ export default {
         const self = this;
 
         etl.getETLDatas(window).then(function (result) {
-            console.log('ini result', result)
             return result;
         }).then(function (datas) {
             self.data = datas;

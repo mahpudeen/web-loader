@@ -3,26 +3,24 @@
 
     <q-form
       @submit="onSubmit"
-      @reset="onReset"
       class="q-gutter-md"
     >
       <q-input
         filled
-        v-model="name"
-        label="Username / email *"
-        hint="Username atau email ojk"
+        v-model="username"
+        label="Username*"
+        hint="Username"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
       />
 
       <q-input
         filled
-        v-model="jabatan"
-        label="Jabatan *"
+        v-model="email"
+        label="Email *"
         lazy-rules
         :rules="[
-          val => val !== null && val !== '' || 'Please type your age',
-          val => val > 0 && val < 100 || 'Please type a real age'
+          val => val !== null && val !== '' || 'Please type your email'
         ]"
       />
 
@@ -66,16 +64,15 @@
 <script>
 
 import history  from '../api/history/index';
+import user  from '../api/user/index';
 export default {
   name: "history",
   data () {
     return {
-      name: null,
+      username: null,
       password: null,
-      jabatan: null,
+      email: null,
       role: null,
-
-      accept: false,
 
       model: null,
 
@@ -90,21 +87,37 @@ export default {
 
   methods: {
     onSubmit () {
-      if (this.accept !== true) {
-        this.$q.notify({
-          color: 'red-5',
-          textColor: 'white',
-          icon: 'warning',
-          message: 'You need to accept the license and terms first'
+      let self = this
+       user
+        .postUser(self.username, self.email, self.password)
+        .then(function(result) {
+            if (result) {
+                self.$q.notify({
+                  color: 'green-4',
+                  textColor: 'white',
+                  icon: 'cloud_done',
+                  message: 'Submitted'
+                })
+                self.$router.go("/user-management");
+                self.name = null
+                self.age = null
+                self.accept = false
+            } else {
+              if (!result) {
+                self.$q.notify({
+                  color: 'red-5',
+                  textColor: 'white',
+                  icon: 'warning',
+                  message: 'Cannot register a User for while, please try again'
+                })
+            }
+          }
+
         })
-      }
-      else {
-        this.$q.notify({
-          color: 'green-4',
-          textColor: 'white',
-          icon: 'cloud_done',
-          message: 'Submitted'
-        })
+        .catch(function(err) {
+          console.log(err);
+        });
+        
       }
     },
 
@@ -114,5 +127,4 @@ export default {
       this.accept = false
     }
   }
-}
 </script>

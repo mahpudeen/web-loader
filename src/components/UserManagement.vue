@@ -4,7 +4,6 @@
        <h4 style="text-align:center; margin-top: 5%">User Management</h4>
 
       <q-input
-        v-model="search"
         debounce="500"
         filled
         placeholder="Search"
@@ -31,16 +30,14 @@
       <q-card>
         <q-card-section>
           <div class="text-h6"> Role Management</div>
-          <div class="text-h7" style="color: green"> Muhamad Rizki </div>
         </q-card-section>
 
         <q-card-section>
                     <q-list bordered padding>
 
-      <q-separator spaced />
       <q-item-label header>Role Access</q-item-label>
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label" >
         <q-item-section side top>
           <q-checkbox v-model="check1" />
         </q-item-section>
@@ -54,10 +51,9 @@
       </q-item>
     
 
-      <q-separator spaced />
       <q-item-label header>Menu Sektor Jasa Keuangan</q-item-label>
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label" >
         <q-item-section side top>
           <q-checkbox v-model="check1" />
         </q-item-section>
@@ -70,7 +66,7 @@
         </q-item-section>
       </q-item>
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label" >
         <q-item-section side top>
           <q-checkbox v-model="check1" />
         </q-item-section>
@@ -83,7 +79,7 @@
         </q-item-section>
       </q-item>
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label" >
         <q-item-section side top>
           <q-checkbox v-model="check1" />
         </q-item-section>
@@ -96,7 +92,7 @@
         </q-item-section>
       </q-item>
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label" >
         <q-item-section side top>
           <q-checkbox v-model="check1" />
         </q-item-section>
@@ -109,7 +105,7 @@
         </q-item-section>
       </q-item>
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label" >
         <q-item-section side top>
           <q-checkbox v-model="check1" />
         </q-item-section>
@@ -122,7 +118,7 @@
         </q-item-section>
       </q-item>
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label" >
         <q-item-section side top>
           <q-checkbox v-model="check1" />
         </q-item-section>
@@ -135,7 +131,7 @@
         </q-item-section>
       </q-item>
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label" >
         <q-item-section side top>
           <q-checkbox v-model="check1" />
         </q-item-section>
@@ -148,7 +144,7 @@
         </q-item-section>
       </q-item>
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label" >
         <q-item-section side top>
           <q-checkbox v-model="check1" />
         </q-item-section>
@@ -161,7 +157,7 @@
         </q-item-section>
       </q-item>
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label" >
         <q-item-section side top>
           <q-checkbox v-model="check1" />
         </q-item-section>
@@ -174,7 +170,7 @@
         </q-item-section>
       </q-item>
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label" >
         <q-item-section side top>
           <q-checkbox v-model="check1" />
         </q-item-section>
@@ -187,11 +183,9 @@
         </q-item-section>
       </q-item>
 
-
-      <q-separator spaced />
       <q-item-label header>Menu Non Sektor Jasa Keuangan</q-item-label>
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label" >
         <q-item-section side top>
           <q-checkbox v-model="check1" />
         </q-item-section>
@@ -204,7 +198,7 @@
         </q-item-section>
       </q-item>
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label" >
         <q-item-section side top>
           <q-checkbox v-model="check1" />
         </q-item-section>
@@ -217,7 +211,7 @@
         </q-item-section>
       </q-item>
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label" >
         <q-item-section side top>
           <q-checkbox v-model="check1" />
         </q-item-section>
@@ -231,7 +225,7 @@
       </q-item>
 
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label" >
         <q-item-section side top>
           <q-checkbox v-model="check1" />
         </q-item-section>
@@ -245,14 +239,9 @@
       </q-item>
 
 
-
-
-      
-
-      <q-separator spaced />
       <q-item-label header>Application Control</q-item-label>
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label" >
         <q-item-section>
           <q-item-label>Login Application</q-item-label>
         </q-item-section>
@@ -261,7 +250,7 @@
         </q-item-section>
       </q-item>
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label">
         <q-item-section>
           <q-item-label>Notification</q-item-label>
           <q-item-label caption>Allow notification</q-item-label>
@@ -271,7 +260,7 @@
         </q-item-section>
       </q-item>
 
-      <q-item tag="label" v-ripple>
+      <q-item tag="label">
         <q-item-section>
           <q-item-label>Push Notification</q-item-label>
           <q-item-label caption>Allow notification when uploading images</q-item-label>
@@ -281,7 +270,6 @@
         </q-item-section>
       </q-item>
 
-      <q-separator spaced />
       <q-item-label header>Other settings</q-item-label>
 
       <q-item>
@@ -331,11 +319,12 @@
         </q-item-section>
       </q-item>
     </q-list>
+    
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Cancel" color="black" v-close-popup @click="closePopUp()"/>
-          <q-btn flat label="Apply" color="black" v-close-popup @click="closePopUp()" />
+          <q-btn flat label="Cancel" color="black"  @click="closePopUp()"/>
+          <q-btn flat label="Apply" color="black"  @click="closePopUp()" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -346,153 +335,38 @@
         
       <q-item-label header>Users</q-item-label>
 
-      <q-item>
-        <q-item-section avatar top>
-          <q-icon name="fab fa-github" color="black" size="34px" />
-        </q-item-section>
+      <div v-for="item in dataUser">
+        <q-item style="border-bottom: 1px solid #d9d9d9">
 
-        <q-item-section top class="col-2 gt-sm">
-          <q-item-label class="q-mt-sm">Muhamad Rizki</q-item-label>
-        </q-item-section>
+          <q-item-section top side>
+            <div>
+              <q-btn class="gt-xs" size="12px" flat dense round icon="people" />
+            </div>
+          </q-item-section>
+    
+          <q-item-section top class="col-2 gt-sm">
+            <q-item-label class="q-mt-sm">{{item.username}}</q-item-label>
+          </q-item-section>
 
-        <q-item-section top>
-          <q-item-label lines="1">
-            <span class="text-weight-medium">Jabatan</span>
-            <span class="text-grey-8"> Deputi Komisioner</span>
-          </q-item-label>
-          <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase">
-            <span class="cursor-pointer">All Access</span>
-          </q-item-label>
-        </q-item-section>
+          <q-item-section top>
+            <q-item-label lines="1">
+              <span class="text-weight-medium">Email</span>
+            </q-item-label>
+            <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary">
+              <span class="cursor-pointer">{{item.email}}</span>
+            </q-item-label>
+          </q-item-section>
 
-        <q-item-section top side>
-          <div class="text-grey-8 q-gutter-xs">
-            <q-btn class="gt-xs" size="12px" flat dense round icon="delete" />
-            <q-btn class="gt-xs" size="12px" flat dense round icon="person_add" @click="basic = true" />
-            <q-btn size="12px" flat dense round icon="more_vert" />
-          </div>
-        </q-item-section>
-      </q-item>
+          <q-item-section top side>
+            <div class="text-grey-8 q-gutter-xs">
+              <q-btn class="gt-xs" size="12px" flat dense round icon="delete"  @click="deleteUser(item.id)"/>
+              <q-btn class="gt-xs" size="12px" flat dense round icon="person_add" @click="basic = true" />
+              <q-btn size="12px" flat dense round icon="more_vert" />
+            </div>
+          </q-item-section>
+        </q-item>
 
-      <q-separator spaced />
-
-      <q-item>
-        <q-item-section avatar top>
-          <q-icon name="fab fa-github" color="black" size="34px" />
-        </q-item-section>
-
-        <q-item-section top class="col-2 gt-sm">
-          <q-item-label class="q-mt-sm">Marla Laksma Maranti</q-item-label>
-        </q-item-section>
-
-        <q-item-section top>
-          <q-item-label lines="1">
-            <span class="text-weight-medium">Jabatan</span>
-            <span class="text-grey-8"> Admin GDST</span>
-          </q-item-label>
-          <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase">
-            <span class="cursor-pointer">Administrator</span>
-          </q-item-label>
-        </q-item-section>
-
-        <q-item-section top side>
-          <div class="text-grey-8 q-gutter-xs">
-            <q-btn class="gt-xs" size="12px" flat dense round icon="delete" />
-            <q-btn class="gt-xs" size="12px" flat dense round icon="person_add" />
-            <q-btn size="12px" flat dense round icon="more_vert" />
-          </div>
-        </q-item-section>
-      </q-item>
-
-      <q-item>
-        <q-item-section avatar top>
-          <q-icon name="fab fa-github" color="black" size="34px" />
-        </q-item-section>
-
-        <q-item-section top class="col-2 gt-sm">
-          <q-item-label class="q-mt-sm">Muhamad Rizki</q-item-label>
-        </q-item-section>
-
-        <q-item-section top>
-          <q-item-label lines="1">
-            <span class="text-weight-medium">Jabatan</span>
-            <span class="text-grey-8"> Deputi Komisioner</span>
-          </q-item-label>
-          <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase">
-            <span class="cursor-pointer">All Access</span>
-          </q-item-label>
-        </q-item-section>
-
-        <q-item-section top side>
-          <div class="text-grey-8 q-gutter-xs">
-            <q-btn class="gt-xs" size="12px" flat dense round icon="delete" />
-            <q-btn class="gt-xs" size="12px" flat dense round icon="person_add" />
-            <q-btn size="12px" flat dense round icon="more_vert" />
-          </div>
-        </q-item-section>
-      </q-item>
-
-      <q-separator spaced />
-
-      <q-item>
-        <q-item-section avatar top>
-          <q-icon name="fab fa-github" color="black" size="34px" />
-        </q-item-section>
-
-        <q-item-section top class="col-2 gt-sm">
-          <q-item-label class="q-mt-sm">Muhamad Rizki</q-item-label>
-        </q-item-section>
-
-        <q-item-section top>
-          <q-item-label lines="1">
-            <span class="text-weight-medium">Jabatan</span>
-            <span class="text-grey-8"> Deputi Komisioner</span>
-          </q-item-label>
-          <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase">
-            <span class="cursor-pointer">All Access</span>
-          </q-item-label>
-        </q-item-section>
-
-        <q-item-section top side>
-          <div class="text-grey-8 q-gutter-xs">
-            <q-btn class="gt-xs" size="12px" flat dense round icon="delete" />
-            <q-btn class="gt-xs" size="12px" flat dense round icon="person_add" />
-            <q-btn size="12px" flat dense round icon="more_vert" />
-          </div>
-        </q-item-section>
-      </q-item>
-
-      <q-separator spaced />
-
-      <q-item>
-        <q-item-section avatar top>
-          <q-icon name="fab fa-github" color="black" size="34px" />
-        </q-item-section>
-
-        <q-item-section top class="col-2 gt-sm">
-          <q-item-label class="q-mt-sm">Muhamad Rizki</q-item-label>
-        </q-item-section>
-
-        <q-item-section top>
-          <q-item-label lines="1">
-            <span class="text-weight-medium">Jabatan</span>
-            <span class="text-grey-8"> Deputi Komisioner</span>
-          </q-item-label>
-          <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase">
-            <span class="cursor-pointer">All Access</span>
-          </q-item-label>
-        </q-item-section>
-
-        <q-item-section top side>
-          <div class="text-grey-8 q-gutter-xs">
-            <q-btn class="gt-xs" size="12px" flat dense round icon="delete" />
-            <q-btn class="gt-xs" size="12px" flat dense round icon="person_add" />
-            <q-btn size="12px" flat dense round icon="more_vert" />
-          </div>
-        </q-item-section>
-      </q-item>
-
-      <q-separator spaced />
+      </div>
     </q-list>
   </div>
 </template>
@@ -502,9 +376,9 @@
 <script>
 
 import history  from '../api/history/index';
+import user  from '../api/user/index';
 import addNewUser from './AddNewUser'
 export default {
-  name: "history",
   data () {
     return {
         isNewUser: true,
@@ -515,6 +389,7 @@ export default {
         { name: 'uploader', align: 'center', label: 'Uploader', field: 'uploader' }
        ],
       data: [],
+      dataUser: [],
       basic: false,
       check1: true,
       check2: false,
@@ -546,6 +421,21 @@ export default {
 
       closePopUp() {
           this.basic = false
+      },
+
+      deleteUser(id) {
+
+        let self = this
+        user.deleteUser(id).then(function (result) {
+          if (result) {
+            self.$router.go("/user-management");
+          } else {
+            console.log('error deleted user')
+          }
+          return result;
+        }).catch(function (err) {
+          console.log(err)
+        });
       }
   },
 
@@ -553,15 +443,24 @@ export default {
     const self = this;
 
     history.getHistory(window).then(function (result) {
-      console.log('ini result', result)
       return result;
     }).then(function (datas) {
-      console.log(datas)
       self.data = datas;
       return datas;
     }).catch(function (err) {
       console.log(err)
     });
+
+    user.getDataUser(window).then(function (result) {
+      return result;
+    }).then(function (datas) {
+      self.dataUser = datas;
+      return datas;
+    }).catch(function (err) {
+      console.log(err)
+    });
+
+
   },
 }
 </script>
