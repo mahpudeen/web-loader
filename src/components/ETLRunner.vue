@@ -51,9 +51,11 @@
     
                         <q-item-section top side>
                         <div class="text-grey-7 q-gutter-xs">
+                           
+                            <q-btn v-if="item.DataSourceType === 'Manual'" class="gt-xs" size="12px" flat dense round icon="cloud_upload" @click="basic = true" />
+                            <q-btn v-if="item.DataSourceType === 'Otomatis'" class="gt-xs" size="12px" flat dense round icon="cloud_upload" @click="basic = true" hidden/>
                             <q-btn v-if="item.ProcessFlag === '0'" :loading="loading2" :percentage="percentage2" class="gt-xs" size="12px" flat dense round icon="play_circle_filled" @click="changeFlag(item.TaskName, 2)"/>
                             <q-btn v-if="item.ProcessFlag === '1'" :loading="loading2" :percentage="percentage2" class="gt-xs" size="12px" flat dense round icon="play_circle_filled" @click="changeFlag(item.TaskName, 2)" disable/>
-                            <q-btn class="gt-xs" size="12px" flat dense round icon="cloud_upload" @click="basic = true" />
                             <q-btn size="12px" flat dense round icon="more_vert" />
                         </div>
             
