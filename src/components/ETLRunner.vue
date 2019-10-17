@@ -52,10 +52,10 @@
                         <q-item-section top side>
                         <div class="text-grey-7 q-gutter-xs">
                            
-                            <q-btn v-if="item.DataSourceType === 'Manual'" class="gt-xs" size="12px" flat dense round icon="cloud_upload" @click="basic = true" />
-                            <q-btn v-if="item.DataSourceType === 'Otomatis'" class="gt-xs" size="12px" flat dense round icon="cloud_upload" @click="basic = true" hidden/>
-                            <q-btn v-if="item.ProcessFlag === '0'" :loading="loading2" :percentage="percentage2" class="gt-xs" size="12px" flat dense round icon="play_circle_filled" @click="changeFlag(item.TaskName, 2)"/>
-                            <q-btn v-if="item.ProcessFlag === '1'" :loading="loading2" :percentage="percentage2" class="gt-xs" size="12px" flat dense round icon="play_circle_filled" @click="changeFlag(item.TaskName, 2)" disable/>
+                            <!-- <q-btn v-if="item.DataSourceType === 'Manual'" class="gt-xs" size="12px" flat dense round icon="cloud_upload" @click="basic = true" />
+                            <q-btn v-if="item.DataSourceType === 'Otomatis'" class="gt-xs" size="12px" flat dense round icon="cloud_upload" @click="basic = true" hidden/> -->
+                            <q-btn v-if="item.ProcessFlag === '0'" :loading="loading2" :percentage="percentage2" class="gt-xs" size="16px" flat dense round icon="play_circle_filled" @click="runner(item.TaskName, 2, item.DataSourceType)"/>
+                            <q-btn v-if="item.ProcessFlag === '1'" :loading="loading2" :percentage="percentage2" class="gt-xs" size="16px" flat dense round icon="play_circle_filled" @click="runner(item.TaskName, 2, item.DataSourceType)" disable/>
                             <q-btn size="12px" flat dense round icon="more_vert" />
                         </div>
             
@@ -84,6 +84,7 @@
                                     label="Nama File"
                                     hint="Contoh: 1. Overview New.xlsx"
                                     lazy-rules
+                                    disable
                                     :rules="[ val => val && val.length > 0 || 'Please type something']"
                                 />
                                 
@@ -111,10 +112,13 @@
                                 </q-form>
                             </div>
                             </div>
+
+                            
                 
                     <q-card-actions align="right">
                         <q-btn flat label="Cancel" color="black" @click="closePopUp()"/>
-                        <q-btn flat label="Apply" type="submit" color="black" @click="submit(waitedFormData)" />
+                        <q-btn v-if="isInitial" flat label="Upload" type="submit" :loading="loading2" :percentage="percentage2" color="black" @click="submit(waitedFormData)" />
+                        <q-btn v-if="isFailed" flat label="Run"  :loading="loading2" :percentage="percentage2" color="black" @click="changeFlag(TaskName)" />
                     </q-card-actions>
                 </q-card>
             </q-dialog>
@@ -319,9 +323,10 @@ export default {
             uploadError: null,
             currentStatus: null,
             uploadFieldName: 'photos',
+            TaskName: '',
             name : 'testing',
             string : 'string',
-            nameFile : '1. Overview New.xlsx',
+            nameFile : '',
             waitedFormData: '',
             loading1: false,
             percentage1: 0,
@@ -371,20 +376,47 @@ export default {
         this.nameFile = ''
       },
 
-      changeFlag(Taskname, id) {
+      runner(Taskname, id, type) {
 
-        let self = this
+        if (type === 'Manual') {
+          this.basic = true;
+          this.TaskName = Taskname;
+          
+        } else if (type === 'Otomatis') {
+          let self = this
 
-        self.startComputing(id)
+          self.startComputing(id)
 
-        etl.changeFlag(Taskname).then(function (result) {
-          return result;
-        }).catch(function (err) {
-          console.log(err)
-        });
+          etl.changeFlag(Taskname).then(function (result) {
+            return result;
+          }).catch(function (err) {
+            console.log(err)
+          });
+        }
       },
 
-      save(formData) {
+      changeFlag(Taskname) {
+          let self = this
+
+          self.startComputing(2)
+
+          etl.changeFlag(Taskname).then(function (result) {
+            
+             this.currentStatus = STATUS_INITIAL;
+            this.uploadedFiles = [];
+            this.uploadError = null;
+            this.nameFile = ''
+            return result;
+             
+          }).catch(function (err) {
+            console.log(err)
+          });
+      },
+
+
+      
+
+      save(formData) {  
         // upload data to the server
         this.currentStatus = STATUS_SAVING;
 
@@ -419,8 +451,9 @@ export default {
         Array
           .from(Array(fileList.length).keys())
           .map(x => {
-            let newNameFile = this.nameFile + '.xlsx'
-            formData.append(fieldName, fileList[x], newNameFile);
+            let nameFile = fileList[0].name
+            this.nameFile = nameFile
+            formData.append(fieldName, fileList[x], nameFile);
           });
 
         // save it
@@ -431,11 +464,7 @@ export default {
       submit(waitedFormData) {
         
         this.save(waitedFormData);
-        this.closePopUp();
-        this.currentStatus = STATUS_INITIAL;
-        this.uploadedFiles = [];
-        this.uploadError = null;
-        this.nameFile = ''
+       
       }
         
     },
