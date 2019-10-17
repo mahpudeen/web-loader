@@ -7,7 +7,7 @@
     </q-page-container>
   </q-layout>
 </template>
- 
+
 <script>
 import Headerz from "@/components/Headerz.vue"
 import Headery from "@/components/Headery.vue"
