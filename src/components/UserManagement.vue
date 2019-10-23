@@ -2,17 +2,6 @@
 
   <div class="q-pa-md q-gutter-md">
        <h4 style="text-align:center; margin-top: 5%">User Management</h4>
-
-      <q-input
-        debounce="500"
-        filled
-        placeholder="Search"
-        style="max-width: 30%"
-      >
-        <template v-slot:append>
-          <q-icon name="search" />
-        </template>
-      </q-input>
       <q-btn color="black" icon="add" label="New User" @click="openNewUser()"/>
       <q-btn color="black" icon="people" label="List Roles" @click="openListUser()"/>
       <q-btn color="black" icon="refresh" label="Refresh" />
