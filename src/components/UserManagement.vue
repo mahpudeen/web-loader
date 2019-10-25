@@ -261,52 +261,6 @@
 
       <q-item-label header>Other settings</q-item-label>
 
-      <q-item>
-        <q-item-section side>
-          <q-icon color="teal" name="volume_down" />
-        </q-item-section>
-        <q-item-section>
-          <q-slider
-            v-model="volume"
-            :min="0"
-            :max="10"
-            label
-            color="teal"
-          />
-        </q-item-section>
-        <q-item-section side>
-          <q-icon  color="teal" name="volume_up" />
-        </q-item-section>
-      </q-item>
-
-      <q-item>
-        <q-item-section side>
-          <q-icon color="deep-orange" name="brightness_medium" />
-        </q-item-section>
-        <q-item-section>
-          <q-slider
-            v-model="brightness"
-            :min="0"
-            :max="10"
-            label
-            color="deep-orange"
-          />
-        </q-item-section>
-      </q-item>
-
-      <q-item>
-        <q-item-section side>
-          <q-icon color="primary" name="mic" />
-        </q-item-section>
-        <q-item-section>
-          <q-slider
-            v-model="mic"
-            :min="0"
-            :max="50"
-            label
-          />
-        </q-item-section>
-      </q-item>
     </q-list>
     
         </q-card-section>
@@ -334,21 +288,25 @@
           </q-item-section>
     
           <q-item-section top class="col-2 gt-sm">
-            <q-item-label class="q-mt-sm">{{item.username}}</q-item-label>
+            <q-item-label class="q-mt-sm">{{item.fullname}}</q-item-label>
+          </q-item-section>
+
+          <q-item-section top class="col-2 gt-sm">
+            <q-item-label class="q-mt-sm">{{item.userLoginId}}</q-item-label>
           </q-item-section>
 
           <q-item-section top>
             <q-item-label lines="1">
-              <span class="text-weight-medium">Email</span>
+              <span class="text-weight-medium">Jabatan</span>
             </q-item-label>
             <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary">
-              <span class="cursor-pointer">{{item.email}}</span>
+              <span class="cursor-pointer">{{item.position}}</span>
             </q-item-label>
           </q-item-section>
 
           <q-item-section top side>
             <div class="text-grey-8 q-gutter-xs">
-              <q-btn class="gt-xs" size="12px" flat dense round icon="delete"  @click="deleteUser(item.id)"/>
+              <q-btn class="gt-xs" size="12px" flat dense round icon="delete"  @click="deleteUser(item.userLoginId)"/>
               <q-btn class="gt-xs" size="12px" flat dense round icon="person_add" @click="basic = true" />
               <q-btn size="12px" flat dense round icon="more_vert" />
             </div>
@@ -366,6 +324,7 @@
 
 import history  from '../api/history/index';
 import user  from '../api/user/index';
+import account  from '../api/account/index';
 import addNewUser from './AddNewUser'
 export default {
   data () {
@@ -412,10 +371,11 @@ export default {
           this.basic = false
       },
 
-      deleteUser(id) {
-
+      deleteUser(userLoginId) {
+        console.log(userLoginId)
         let self = this
-        user.deleteUser(id).then(function (result) {
+        account.deleteAccount(userLoginId).then(function (result) {
+          console.log(result)
           if (result) {
             self.$router.go("/user-management");
           } else {
@@ -440,7 +400,7 @@ export default {
       console.log(err)
     });
 
-    user.getDataUser(window).then(function (result) {
+    account.getDataAccount(window).then(function (result) {
       return result;
     }).then(function (datas) {
       self.dataUser = datas;

@@ -16,15 +16,23 @@
 
       <q-input
         filled
-        v-model="email"
-        label="Email *"
+        v-model="fullname"
+        label="Fullname*"
+        hint="Fullname"
         lazy-rules
-        :rules="[
-          val => val !== null && val !== '' || 'Please type your email'
-        ]"
+        :rules="[ val => val && val.length > 0 || 'Please type something']"
       />
 
       <q-input
+        filled
+        v-model="jabatan"
+        label="Jabatan*"
+        hint="Jabatan"
+        lazy-rules
+        :rules="[ val => val && val.length > 0 || 'Please type something']"
+      />
+
+      <!-- <q-input
         filled
         type="password"
         v-model="password"
@@ -32,7 +40,7 @@
         hint="Password harus terdiri dari minimal 8 digit"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
-      />
+      /> -->
 
       <q-select rounded outlined bottom-slots v-model="model" :options="options" label="Role" counter maxlength="12" :dense="dense" :options-dense="denseOpts" style="margin-top: 50px; margin-bottom: 50px">
         <template v-slot:before>
@@ -65,6 +73,9 @@
 
 import history  from '../api/history/index';
 import user  from '../api/user/index';
+import role  from '../api/roles/index';
+import account  from '../api/account/index';
+
 export default {
   name: "history",
   data () {
@@ -72,12 +83,13 @@ export default {
       username: null,
       password: null,
       email: null,
+      jabatan: null,
+      fullname: null,
       role: null,
 
       model: null,
 
       options: [
-        'Admin Satker', 'ADK', 'Staff ADK', 'Deputi Komisioner', 'Deputi Direktur', 'Pimpinan Satker', 'GDST'
       ],
 
       dense: false,
@@ -88,8 +100,25 @@ export default {
   methods: {
     onSubmit () {
       let self = this
-       user
-        .postUser(self.username, self.email, self.password)
+
+        if (self.model === 'admin') {
+          self.role = '1'
+        } else if (self.model === 'adk-ojk') {
+          self.role = '2'
+        } else if (self.model === 'staff-adk-ojk') {
+          self.role = '3'
+        } else if (self.model === 'Deputi-Komisioner') {
+          self.role = '4'
+        } else if (self.model === 'Pimpinan-Satker') {
+          self.role = '5'
+        } else if (self.model === 'GDST') {
+          self.role = '6'
+        }
+
+
+        console.log(self.username, self.fullname, self.jabatan, self.role)
+       account
+        .postAccount(self.username, self.fullname, self.jabatan, self.role)
         .then(function(result) {
             if (result) {
                 self.$q.notify({
@@ -119,6 +148,22 @@ export default {
         });
         
       }
+    },
+
+    beforeCreate() {
+      const self = this;
+
+      role.getDataRoles(window).then(function (result) {
+        return result;
+      }).then(function (datas) {
+        console.log(datas)
+        for (let i=0; i < datas.length; i++) {
+          self.options.push(datas[i].name);
+        }
+        return datas;
+      }).catch(function (err) {
+        console.log(err)
+      });
     },
 
     onReset () {

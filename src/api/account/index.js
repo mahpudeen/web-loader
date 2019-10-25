@@ -6,9 +6,9 @@ Vue.use(VueResource)
 
 export default {
 
-    getDataUser(window){
+    getDataAccount(window){
         return getApiNoAuth()
-        .get('users')
+        .get('Accounts')
         .then(function (response){
             return response.data
         }).catch(function(err){
@@ -16,13 +16,12 @@ export default {
         })
     },
 
-
-    postUser(username, fullname, jabatan, role){
+    postAccount(userLoginId, fullname, position, role){
         return getApiNoAuth()
-        .post('users', {
-                userLoginId: username,
+        .post('Accounts', {
+                userLoginId: userLoginId,
                 fullname: fullname,
-                position: jabatan,
+                position: position,
                 role: role
             })
         .then(function (response){
@@ -32,9 +31,11 @@ export default {
         })
     },
 
-    deleteUser(id){
+    deleteAccount(userLoginId){
         return getApiNoAuth()
-        .delete('users/'+id)
+        .post('Accounts/deleteByName', {
+            userLoginId: userLoginId,
+        })
         .then(function (response){
             return response.data
         }).catch(function(err){

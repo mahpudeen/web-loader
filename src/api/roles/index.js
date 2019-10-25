@@ -8,9 +8,8 @@ export default {
 
       getDataRoles(window){
         return getApiNoAuth()
-        .get('http://localhost:3000/api/Roles?filter=%7B%22include%22%3A%22employee%22%7D')
+        .get('Roles')
         .then(function (response){
-            console.log(response)
             return response.data
         }).catch(function(err){
             console.log(err)
