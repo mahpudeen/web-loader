@@ -325,7 +325,9 @@
 import history  from '../api/history/index';
 import user  from '../api/user/index';
 import account  from '../api/account/index';
-import addNewUser from './AddNewUser'
+import addNewUser from './AddNewUser';
+import Actv  from '../api/activities/index';
+
 export default {
   data () {
     return {
@@ -372,14 +374,17 @@ export default {
       },
 
       deleteUser(userLoginId) {
-        console.log(userLoginId)
         let self = this
         account.deleteAccount(userLoginId).then(function (result) {
-          console.log(result)
           if (result) {
+          Actv.postUserAct(userLoginId,localStorage.getItem("username"),"Delete User")
+                .then(function(result){
+                 });
             self.$router.go("/user-management");
           } else {
-            console.log('error deleted user')
+          Actv.postUserAct(userLoginId,localStorage.getItem("username"),"Failed Delete User")
+                .then(function(result){
+                 });
           }
           return result;
         }).catch(function (err) {
