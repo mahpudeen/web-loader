@@ -75,6 +75,7 @@ import history  from '../api/history/index';
 import kuser  from '../api/user/index';
 import role  from '../api/roles/index';
 import account  from '../api/account/index';
+import Actv  from '../api/activities/index';
 
 export default {
   name: "history",
@@ -132,6 +133,10 @@ export default {
                   icon: 'cloud_done',
                   message: 'Submitted'
                 })
+//                Actv.postUserAct(self.username,localStorage.getItem("userNow"),"Create User")
+                Actv.postUserAct(self.username,self.$ls.get("username"),"Create User")
+                .then(function(result){
+                 });
                 self.$router.go("/user-management");
                 self.name = null
                 self.age = null

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:81/api/';
+const API_URL = 'https://exist.ojk.go.id/api/';
 
 export function getApiNoAuth(){
     return axios.create({

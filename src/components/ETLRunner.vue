@@ -465,6 +465,14 @@ export default {
         
         this.save(waitedFormData);
        
+      },
+
+      getDatas() {
+        etl.getETLDatas(window).then(function (result) {
+            return result;
+        }).catch(function (err) {
+            console.log(err)
+        });
       }
         
     },
@@ -518,6 +526,7 @@ export default {
   },
    mounted() {
       this.reset();
+      this.$set(this, 'data', this.getDatas())
     },
 }
 </script>
