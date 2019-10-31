@@ -72,7 +72,7 @@
 <script>
 
 import history  from '../api/history/index';
-import user  from '../api/user/index';
+import kuser  from '../api/user/index';
 import role  from '../api/roles/index';
 import account  from '../api/account/index';
 
@@ -117,6 +117,11 @@ export default {
 
 
         console.log(self.username, self.fullname, self.jabatan, self.role)
+        let email = self.username+'@ojk.go.id';
+      kuser.addUser(self.username,self.email)
+      .catch(function(err) {
+          console.log(err);
+        });
        account
         .postAccount(self.username, self.fullname, self.jabatan, self.role)
         .then(function(result) {

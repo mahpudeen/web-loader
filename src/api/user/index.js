@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import VueResource from 'vue-resource'
 import Vue from 'vue'
 import {getApiNoAuth} from '../utils'
@@ -5,25 +6,11 @@ import {getApiNoAuth} from '../utils'
 Vue.use(VueResource)
 
 export default {
-
-    getDataUser(window){
+    postUser(username, email){
         return getApiNoAuth()
-        .get('users')
-        .then(function (response){
-            return response.data
-        }).catch(function(err){
-            console.log(err)
-        })
-    },
-
-
-    postUser(username, fullname, jabatan, role){
-        return getApiNoAuth()
-        .post('users', {
-                userLoginId: username,
-                fullname: fullname,
-                position: jabatan,
-                role: role
+        .post('kusers/addUser', {
+                username: username,
+                email: email
             })
         .then(function (response){
             return response.data
@@ -32,9 +19,11 @@ export default {
         })
     },
 
-    deleteUser(id){
+    deleteUser(username){
         return getApiNoAuth()
-        .delete('users/'+id)
+        .post('kusers/deleteByName', {
+            username: username,
+         })
         .then(function (response){
             return response.data
         }).catch(function(err){
