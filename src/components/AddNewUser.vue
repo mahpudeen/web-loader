@@ -109,17 +109,23 @@ export default {
         } else if (self.model === 'staff-adk-ojk') {
           self.role = '3'
         } else if (self.model === 'Deputi-Komisioner') {
-          self.role = '4'
+          self.role = '7'
         } else if (self.model === 'Pimpinan-Satker') {
           self.role = '5'
-        } else if (self.model === 'GDST') {
+        } else if (self.model === 'admin-perbankan') {
           self.role = '6'
+        } else if (self.model === 'admin-pasar-modal') {
+          self.role = '4'
+        }else if (self.model === 'admin-iknb') {
+          self.role = '4'
         }
-
-
         console.log(self.username, self.fullname, self.jabatan, self.role)
         let email = self.username+'@ojk.go.id';
-      kuser.addUser(self.username,self.email)
+      kuser.postUser(self.username,email)
+      .then(function(result){
+        if(!result){
+        }
+      })
       .catch(function(err) {
           console.log(err);
         });
@@ -136,11 +142,16 @@ export default {
 //                Actv.postUserAct(self.username,localStorage.getItem("userNow"),"Create User")
                 Actv.postUserAct(self.username,self.$ls.get("username"),"Create User")
                 .then(function(result){
+                  if(result){
+                    self.$router.go("/user-management");
+                    self.name = null
+                    self.age = null
+                    self.accept = false
+                  }else{
+                    console.log(self.username)
+                  }
                  });
-                self.$router.go("/user-management");
-                self.name = null
-                self.age = null
-                self.accept = false
+                
             } else {
               if (!result) {
                 self.$q.notify({
