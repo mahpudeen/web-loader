@@ -278,7 +278,7 @@
         
       <q-item-label header>Users</q-item-label>
 
-      <div v-for="item in dataUser">
+      <div v-for="item in dataUser" v-bind:key="item">
         <q-item style="border-bottom: 1px solid #d9d9d9">
 
           <q-item-section top side>
