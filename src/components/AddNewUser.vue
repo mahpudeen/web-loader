@@ -8,28 +8,100 @@
       <q-input
         filled
         v-model="username"
-        label="Username*"
-        hint="Username"
+        label="Search LDAP"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
+      >
+      <template v-slot:append>
+          <q-btn flat icon="search" @click="search()" />
+        </template>
+      </q-input>
+
+      <q-list bordered class="rounded-borders" style="max-width: 100%" v-if="hasilSearch">
+        
+      <q-item-label header style="text-align:center">Hasil Pencarian</q-item-label>
+      <q-item style="border-bottom: 1px solid #d9d9d9">
+          <div class="col-3">
+            <q-item-section top side>
+              <q-item-label lines="1">
+                <span class="text-weight-medium text-primary">Kode</span>
+              </q-item-label>
+            </q-item-section>
+          </div>
+          <div class="col-4">
+            <q-item-section top side>
+              <q-item-label lines="1">
+                <span class="text-weight-medium text-primary">Nama</span>
+              </q-item-label>
+            </q-item-section>
+          </div>
+          <div class="col-4">
+            <q-item-section top side>
+              <q-item-label lines="1">
+                <span class="text-weight-medium text-primary">Email</span>
+              </q-item-label>
+            </q-item-section>
+          </div>
+        </q-item>
+
+      <div v-for="item in dataUser" v-bind:key="item">
+        <q-item style="border-bottom: 1px solid #d9d9d9">
+          <div class="col-3">
+            <q-item-section top side>
+              <q-item-label lines="1">
+                <span class="text-weight-medium">{{item.code}}</span>
+              </q-item-label>
+            </q-item-section>
+          </div>
+          <div class="col-4">
+            <q-item-section top side>
+              <q-item-label lines="1">
+                <span class="text-weight-medium">{{item.name}}</span>
+              </q-item-label>
+            </q-item-section>
+          </div>
+          <div class="col-4">
+            <q-item-section top side>
+              <q-item-label lines="1">
+                <span class="text-weight-medium">{{item.email}}</span>
+              </q-item-label>
+            </q-item-section>
+          </div>
+          <q-item-section top side>
+            <div class="text-grey-8 q-gutter-xs">
+              <q-btn class="gt-xs" size="12px" flat dense round icon="done"  @click="add(item)"/>
+             </div>
+          </q-item-section>
+        </q-item>
+
+      </div>
+    </q-list>
+
+      <q-input
+        filled
+        v-model="code"
+        label="User Code"
+        lazy-rules
+        :rules="[ val => val && val.length > 0 || 'Please type something']"
+        disable
       />
 
       <q-input
         filled
         v-model="fullname"
-        label="Fullname*"
-        hint="Fullname"
+        label="Full Name User"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
+        disable
       />
 
       <q-input
         filled
-        v-model="jabatan"
-        label="Jabatan*"
-        hint="Jabatan"
+        v-model="email"
+        label="Email"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
+        disable
       />
 
       <!-- <q-input
@@ -81,12 +153,26 @@ export default {
   name: "history",
   data () {
     return {
+      hasilSearch: false,
+      code: null,
       username: null,
       password: null,
       email: null,
       jabatan: null,
       fullname: null,
       role: null,
+      dataUser: [
+        {
+          code:"testasdasdasdadas",
+          name:"Dindin",
+          email:"mahpudeen@gmail.com"
+        },
+        {
+          code:"testas",
+          name:"oasdkas",
+          email:"mahpasdasdudeen@gmail.com"
+        }
+      ],
 
       model: null,
 
@@ -99,6 +185,15 @@ export default {
   },
 
   methods: {
+    search() {
+      this.hasilSearch = true
+    },
+    add(item) {
+      this.code = item.code;
+      this.fullname = item.name;
+      this.email = item.email;
+      this.hasilSearch = false;
+    },
     onSubmit () {
       let self = this
 
@@ -116,7 +211,7 @@ export default {
           self.role = '6'
         } else if (self.model === 'admin-pasar-modal') {
           self.role = '4'
-        }else if (self.model === 'admin-iknb') {
+        } else if (self.model === 'admin-iknb') {
           self.role = '4'
         }
         console.log(self.username, self.fullname, self.jabatan, self.role)
@@ -185,7 +280,16 @@ export default {
       }).catch(function (err) {
         console.log(err)
       });
-    },
+
+      // account.getDataAccount(window).then(function (result) {
+      //     return result;
+      //   }).then(function (datas) {
+      //     self.dataUser = datas;
+      //     return datas;
+      //   }).catch(function (err) {
+      //     console.log(err)
+      //   });
+      },
 
     onReset () {
       this.name = null
