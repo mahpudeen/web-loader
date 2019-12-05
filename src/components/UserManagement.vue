@@ -308,6 +308,7 @@
             <div class="text-grey-8 q-gutter-xs">
               <q-btn class="gt-xs" size="12px" flat dense round icon="delete"  @click="deleteUser(item.userLoginId)"/>
               <!-- <q-btn class="gt-xs" size="12px" flat dense round icon="person_add" @click="basic = true" /> -->
+              <q-btn class="gt-xs" size="12px" flat dense round icon="create" @click="updateUser(item)" />
               <q-btn size="12px" flat dense round icon="more_vert" />
             </div>
           </q-item-section>
@@ -315,11 +316,76 @@
 
       </div>
     </q-list>
+    <q-dialog v-model="update">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Update Role</div>
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-section style="max-height: 60vh; width:500px" class="scroll">
+          <q-input
+            filled
+            v-model="code"
+            label="User Code"
+            lazy-rules
+            :rules="[ val => val && val.length > 0 || 'Please type something']"
+            disable
+          />
+
+          <q-input
+            filled
+            v-model="fullname"
+            label="Full Name User"
+            lazy-rules
+            :rules="[ val => val && val.length > 0 || 'Please type something']"
+            disable
+          />
+
+          <q-input
+            filled
+            v-model="email"
+            label="Email"
+            lazy-rules
+            :rules="[ val => val && val.length > 0 || 'Please type something']"
+            disable
+          />
+
+          <q-select
+            filled
+            v-model="model"
+            use-input
+            hide-selected
+            fill-input
+            input-debounce="0"
+            :options="options"
+            @filter="filterFn"
+            label="Role"
+            style="width: 100%; padding-bottom: 32px"
+          >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey">
+                  No results
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+          
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-actions align="center">
+          <q-btn flat label="Update" color="primary" v-close-popup />
+          <q-btn flat label="Cancel" color="grey" @click="close()" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
-<style>
-</style>
 <script>
 
 import history  from '../api/history/index';
@@ -327,6 +393,8 @@ import user  from '../api/user/index';
 import account  from '../api/account/index';
 import addNewUser from './AddNewUser';
 import Actv  from '../api/activities/index';
+import role  from '../api/roles/index';
+const stringOptions = []
 
 export default {
   data () {
@@ -340,11 +408,19 @@ export default {
        ],
       data: [],
       dataUser: [],
+      update: false,
+      code: null,
+      username: null,
+      password: null,
+      email: null,
+      jabatan: null,
+      fullname: null,
+      role: null,
       basic: false,
       check1: true,
       check2: false,
       check3: false,
-
+      options: stringOptions,
       notif1: true,
       notif2: true,
       notif3: false,
@@ -360,6 +436,23 @@ export default {
   },
 
   methods : {
+      close() {
+        this.update = false;
+
+      },
+      updateUser(item) {
+        this.code = item.userLoginId;
+        this.fullname = item.fullname;
+        this.email = item.userLoginId+"@ojk.go.id";
+        this.update = true;
+
+      },
+      filterFn (val, update, abort) {
+        update(() => {
+          const needle = val.toLowerCase()
+          this.options = stringOptions.filter(v => v.toLowerCase().indexOf(needle) > -1)
+        })
+      },
 
       openNewUser() {
           this.isNewUser = false
@@ -409,6 +502,18 @@ export default {
       return result;
     }).then(function (datas) {
       self.dataUser = datas;
+      return datas;
+    }).catch(function (err) {
+      console.log(err)
+    });
+
+    role.getDataRoles(window).then(function (result) {
+      return result;
+    }).then(function (datas) {
+      console.log(datas)
+      for (let i=0; i < datas.length; i++) {
+        self.options.push(datas[i].name);
+      }
       return datas;
     }).catch(function (err) {
       console.log(err)
