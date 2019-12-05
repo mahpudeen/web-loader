@@ -8,7 +8,7 @@
 
         <q-list bordered class="rounded-borders" v-if="!isNewUser">
             <q-item-label header>Please fill the information</q-item-label>
-            <q-item style="max-width: 50%">
+            <q-item style="max-width: 100%">
                 <add-new-user ></add-new-user>
             </q-item>
             
@@ -297,7 +297,7 @@
 
           <q-item-section top>
             <q-item-label lines="1">
-              <span class="text-weight-medium">Jabatan</span>
+              <span class="text-weight-medium">Roles</span>
             </q-item-label>
             <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary">
               <span class="cursor-pointer">{{item.position}}</span>
@@ -327,7 +327,7 @@
         <q-card-section style="max-height: 60vh; width:500px" class="scroll">
           <q-input
             filled
-            v-model="code"
+            v-model="userLoginId"
             label="User Code"
             lazy-rules
             :rules="[ val => val && val.length > 0 || 'Please type something']"
@@ -343,15 +343,6 @@
             disable
           />
 
-          <q-input
-            filled
-            v-model="email"
-            label="Email"
-            lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Please type something']"
-            disable
-          />
-
           <q-select
             filled
             v-model="model"
@@ -360,9 +351,13 @@
             fill-input
             input-debounce="0"
             :options="options"
+            :option-label="opt=>opt.name"
+            :option-value="opt=>opt"
             @filter="filterFn"
             label="Role"
-            style="width: 100%; padding-bottom: 32px"
+            hint="Pilih salah satu role user"
+            style="margin-bottom: 30px"
+            @input="onSelectionChanged"
           >
             <template v-slot:no-option>
               <q-item>
@@ -378,7 +373,7 @@
         <q-separator />
 
         <q-card-actions align="center">
-          <q-btn flat label="Update" color="primary" v-close-popup />
+          <q-btn flat label="Update" color="primary" @click="updateDataUser()" />
           <q-btn flat label="Cancel" color="grey" @click="close()" />
         </q-card-actions>
       </q-card>
@@ -409,10 +404,11 @@ export default {
       data: [],
       dataUser: [],
       update: false,
-      code: null,
+      userLoginId: null,
       username: null,
       password: null,
       email: null,
+      model: null,
       jabatan: null,
       fullname: null,
       role: null,
@@ -436,22 +432,37 @@ export default {
   },
 
   methods : {
+      onSelectionChanged: function (val) {
+        let self = this
+        this.role = val.id;
+        this.position = val.name;
+      },
       close() {
         this.update = false;
-
       },
       updateUser(item) {
-        this.code = item.userLoginId;
+        this.userLoginId = item.userLoginId;
         this.fullname = item.fullname;
-        this.email = item.userLoginId+"@ojk.go.id";
         this.update = true;
-
       },
       filterFn (val, update, abort) {
         update(() => {
           const needle = val.toLowerCase()
-          this.options = stringOptions.filter(v => v.toLowerCase().indexOf(needle) > -1)
+          this.options = stringOptions.filter(v => v.name.toLowerCase().indexOf(needle) > -1)
         })
+      },
+      updateDataUser() {
+        let self = this
+        console.log(this.role, this.position, this.userLoginId)
+        account.updateRole(this.role, this.position, this.userLoginId)
+        .then(function(result){
+          console.log(result)
+          self.$router.go('/user-management')
+        }).catch(function (err) {
+          console.log(err)
+        });
+        this.update = false;
+        // this.$router.go('/user-management')
       },
 
       openNewUser() {
@@ -512,7 +523,7 @@ export default {
     }).then(function (datas) {
       console.log(datas)
       for (let i=0; i < datas.length; i++) {
-        self.options.push(datas[i].name);
+        self.options.push(datas[i]);
       }
       return datas;
     }).catch(function (err) {

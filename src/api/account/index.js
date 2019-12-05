@@ -41,6 +41,20 @@ export default {
         }).catch(function(err){
             console.log(err)
         })
+    },
+
+    updateRole(role, position,userLoginId){
+        return getApiNoAuth()
+        .put('Accounts/updateRole', {
+            role : role,
+            position : position,
+            userLoginId : userLoginId}
+            )
+        .then(function (response){
+            return response.data
+        }).catch(function(err){
+            console.log(err)
+        })
     }
     
 }

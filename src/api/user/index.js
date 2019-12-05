@@ -29,6 +29,18 @@ export default {
         }).catch(function(err){
             console.log(err)
         })
+    },
+
+    findLdapUser(searchUser){
+        return getApiNoAuth()
+        .get('ldaps/getUsersLDAP?name='+searchUser)
+        .then(function (response){
+            return response.data
+        }).catch(function(err){
+            console.log(err)
+        })
     }
+
+
     
 }

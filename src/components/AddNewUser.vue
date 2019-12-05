@@ -7,18 +7,22 @@
     >
       <q-input
         filled
-        v-model="username"
+        v-model="searchUser"
         label="Search LDAP"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
+        class="setengah"
       >
       <template v-slot:append>
           <q-btn flat icon="search" @click="search()" />
         </template>
       </q-input>
 
-      <q-list bordered class="rounded-borders" style="max-width: 100%" v-if="hasilSearch">
-        
+      <q-list bordered class="rounded-borders" style="max-width: 100%; margin-bottom:5px;" v-if="hasilSearch">
+      <div v-if="typeof(dataUser) === 'undefined'">
+        <q-item-label header style="text-align:center">Hasil tidak ditemukan</q-item-label>  
+      </div>
+      <div v-else>
       <q-item-label header style="text-align:center">Hasil Pencarian</q-item-label>
       <q-item style="border-bottom: 1px solid #d9d9d9">
           <div class="col-3">
@@ -49,21 +53,21 @@
           <div class="col-3">
             <q-item-section top side>
               <q-item-label lines="1">
-                <span class="text-weight-medium">{{item.code}}</span>
+                <span class="text-weight-medium">{{item.sAMAccountName}}</span>
               </q-item-label>
             </q-item-section>
           </div>
           <div class="col-4">
             <q-item-section top side>
               <q-item-label lines="1">
-                <span class="text-weight-medium">{{item.name}}</span>
+                <span class="text-weight-medium">{{item.displayName}}</span>
               </q-item-label>
             </q-item-section>
           </div>
           <div class="col-4">
             <q-item-section top side>
               <q-item-label lines="1">
-                <span class="text-weight-medium">{{item.email}}</span>
+                <span class="text-weight-medium">{{item.mail}}</span>
               </q-item-label>
             </q-item-section>
           </div>
@@ -75,15 +79,17 @@
         </q-item>
 
       </div>
+      </div>
     </q-list>
 
       <q-input
         filled
-        v-model="code"
+        v-model="username"
         label="User Code"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
         disable
+        class="setengah"
       />
 
       <q-input
@@ -93,6 +99,7 @@
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
         disable
+        class="setengah"
       />
 
       <q-input
@@ -102,6 +109,7 @@
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
         disable
+        class="setengah"
       />
 
       <!-- <q-input
@@ -114,7 +122,7 @@
         :rules="[ val => val && val.length > 0 || 'Please type something']"
       /> -->
 
-      <q-select rounded outlined bottom-slots v-model="model" :options="options" label="Role" counter maxlength="12" :dense="dense" :options-dense="denseOpts" style="margin-top: 50px; margin-bottom: 50px">
+      <!-- <q-select rounded outlined bottom-slots v-model="model" :options="options" label="Role" counter maxlength="12" :dense="dense" :options-dense="denseOpts" style="margin-top: 50px; margin-bottom: 50px">
         <template v-slot:before>
           <q-icon name="people" />
         </template>
@@ -127,7 +135,32 @@
         <template v-slot:hint>
           Pilih salah satu role user
         </template>
-      </q-select>
+      </q-select> -->
+      <q-select
+            filled
+            v-model="model"
+            use-input
+            hide-selected
+            fill-input
+            input-debounce="0"
+            :options="options"
+            :option-label="opt=>opt.name"
+            :option-value="opt=>opt"
+            @filter="filterFn"
+            label="Role"
+            hint="Pilih salah satu role user"
+            style="margin-bottom: 30px"
+            @input="onSelectionChanged"
+            class="setengah"
+          >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey">
+                  No results
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
 
 
       <div>
@@ -140,6 +173,10 @@
 </template>
 
 <style>
+.setengah {
+    max-width: 50%;
+    margin-bottom: -25px;
+}
 </style>
 <script>
 
@@ -148,12 +185,16 @@ import kuser  from '../api/user/index';
 import role  from '../api/roles/index';
 import account  from '../api/account/index';
 import Actv  from '../api/activities/index';
+import user  from '../api/user/index';
+
+const stringOptions = []
 
 export default {
   name: "history",
   data () {
     return {
       hasilSearch: false,
+      searchUser: "",
       code: null,
       username: null,
       password: null,
@@ -161,23 +202,11 @@ export default {
       jabatan: null,
       fullname: null,
       role: null,
-      dataUser: [
-        {
-          code:"testasdasdasdadas",
-          name:"Dindin",
-          email:"mahpudeen@gmail.com"
-        },
-        {
-          code:"testas",
-          name:"oasdkas",
-          email:"mahpasdasdudeen@gmail.com"
-        }
-      ],
+      dataUser: [],
 
       model: null,
 
-      options: [
-      ],
+      options: stringOptions,
 
       dense: false,
       denseOpts: false
@@ -186,37 +215,41 @@ export default {
 
   methods: {
     search() {
+      let self = this
+      
+      user.findLdapUser(this.searchUser).then(function (result) {
+        return result;
+      }).then(function (datas) {
+        console.log(datas)
+        self.dataUser = datas;
+        console.log("ini data ", self.dataUser)
+      }).catch(function (err) {
+        console.log(err)
+      });
       this.hasilSearch = true
     },
     add(item) {
-      this.code = item.code;
-      this.fullname = item.name;
-      this.email = item.email;
+      this.username = item.sAMAccountName;
+      this.fullname = item.displayName;
+      this.email = item.mail;
       this.hasilSearch = false;
+    },
+    
+    filterFn (val, update, abort) {
+      update(() => {
+        const needle = val.toLowerCase()
+        this.options = stringOptions.filter(v => v.name.toLowerCase().indexOf(needle) > -1)
+      })
+    },
+    onSelectionChanged: function (val) {
+      let self = this
+      this.role = val.id;
+      this.jabatan = val.name;
     },
     onSubmit () {
       let self = this
-
-        if (self.model === 'admin') {
-          self.role = '1'
-        } else if (self.model === 'adk-ojk') {
-          self.role = '2'
-        } else if (self.model === 'staff-adk-ojk') {
-          self.role = '3'
-        } else if (self.model === 'Deputi-Komisioner') {
-          self.role = '7'
-        } else if (self.model === 'Pimpinan-Satker') {
-          self.role = '5'
-        } else if (self.model === 'admin-perbankan') {
-          self.role = '6'
-        } else if (self.model === 'admin-pasar-modal') {
-          self.role = '4'
-        } else if (self.model === 'admin-iknb') {
-          self.role = '4'
-        }
-        console.log(self.username, self.fullname, self.jabatan, self.role)
-        let email = self.username+'@ojk.go.id';
-      kuser.postUser(self.username,email)
+        console.log(self.username, self.fullname, self.jabatan, self.role, self.email)
+      kuser.postUser(self.username, self.email)
       .then(function(result){
         if(!result){
         }
@@ -274,7 +307,7 @@ export default {
       }).then(function (datas) {
         console.log(datas)
         for (let i=0; i < datas.length; i++) {
-          self.options.push(datas[i].name);
+          self.options.push(datas[i]);
         }
         return datas;
       }).catch(function (err) {
