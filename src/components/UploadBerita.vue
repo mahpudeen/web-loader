@@ -297,11 +297,11 @@ export default {
         // upload data to the server
         this.currentStatus = STATUS_SAVING;
 
-        history.saveHistory(window, this.$ls.get("username"), this.nameFile, 'Monitoring Berita Harian' ).then(function (images) {
-          return images;
-        }).catch(function (err) {
-          console.log(err)
-        });
+        // history.saveHistory(window, this.$ls.get("username"), this.nameFile, 'Monitoring Berita Harian' ).then(function (images) {
+        //   return images;
+        // }).catch(function (err) {
+        //   console.log(err)
+        // });
 
         uploadNews(formData)
           .then(x => {

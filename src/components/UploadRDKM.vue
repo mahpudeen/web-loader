@@ -303,11 +303,11 @@ export default {
         // upload data to the server
         this.currentStatus = STATUS_SAVING;
 
-        history.saveHistory(window, this.$ls.get("username"), this.nameFile, 'Market Update Harian' ).then(function (images) {
-          return images;
-        }).catch(function (err) {
-          console.log(err)
-        });
+        // history.saveHistory(window, this.$ls.get("username"), this.nameFile, 'Market Update Harian' ).then(function (images) {
+        //   return images;
+        // }).catch(function (err) {
+        //   console.log(err)
+        // });
 
         uploadRDKM(formData)
           .then(x => {

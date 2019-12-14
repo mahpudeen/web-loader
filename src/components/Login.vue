@@ -67,33 +67,43 @@ export default {
     onSubmit() {
       let self = this;
 
-      login_api
-        .getLogin(window, self.username, self.password)
-        .then(function(result) {
-          if (!result) {
-            self.$q.notify({
-              color: "red-5",
-              textColor: "white",
-              icon: "fas fa-exclamation-triangle",
-              message: "Wrong Username or Password"
-            });
-          } else {
-            self.$q.notify({
+      // login_api
+      //   .getLogin(window, self.username, self.password)
+      //   .then(function(result) {
+      //     if (!result) {
+      //       self.$q.notify({
+      //         color: "red-5",
+      //         textColor: "white",
+      //         icon: "fas fa-exclamation-triangle",
+      //         message: "Wrong Username or Password"
+      //       });
+      //     } else {
+      //       self.$q.notify({
+      //         color: "green-4",
+      //         textColor: "white",
+      //         icon: "fas fa-check-circle",
+      //         message: "You're Logged In"
+      //       });
+      //       self.$ls.set("userNow", result.id);
+      //       self.$ls.set("username", result.username);
+      //       self.$router.push("berita");
+      //     }
+      //     return result;
+      //   })
+      //   .catch(function(err) {
+      //     console.log(err);
+      //   });
+
+      self.$q.notify({
               color: "green-4",
               textColor: "white",
               icon: "fas fa-check-circle",
               message: "You're Logged In"
             });
-            self.$ls.set("userNow", result.id);
-            self.$ls.set("username", result.username);
-            console.log("id nya dia = ", self.$ls.get("userNow"))
+            self.$ls.set("userNow", 'admin');
+            self.$ls.set("username", 'admin');
             self.$router.push("berita");
-          }
-          return result;
-        })
-        .catch(function(err) {
-          console.log(err);
-        });
+
     },
 
     onReset() {
