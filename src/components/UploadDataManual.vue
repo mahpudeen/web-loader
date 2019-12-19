@@ -221,6 +221,7 @@
 </style>
 
 <script>
+import Actv  from '../api/activities/index';
 import {upload}  from '../api/upload/index';
 import {uploadNews}  from '../api/upload/index';
 import history  from '../api/history/index';
@@ -283,11 +284,11 @@ export default {
         // upload data to the server
         this.currentStatus = STATUS_SAVING;
 
-        // history.saveHistory(window, this.$ls.get("username"), this.nameFile, 'Monitoring Berita Harian' ).then(function (images) {
-        //   return images;
-        // }).catch(function (err) {
-        //   console.log(err)
-        // });
+        Actv.postUserAct(this.$ls.get("userNow"), this.$ls.get("username"), 'Upload Monitoring Berita Harian' ).then(function (images) {
+          return images;
+        }).catch(function (err) {
+          console.log(err)
+        });
 
         uploadNews(formData)
           .then(x => {

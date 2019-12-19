@@ -1,7 +1,6 @@
 <template>
 
     <div class="flex flex-center" style="padding-top: 80px">
-      {{userNoww}}
       <div class="q-pa-md" style="max-width: 350px; width:100%;text-align:center;">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           
@@ -32,6 +31,7 @@
 </style>
 
 <script>
+import Actv  from '../api/activities/index';
 import login_api from '../api/login/index';
 
 export default {
@@ -39,16 +39,8 @@ export default {
 
   data() {
     return {
-      username: "",
-      userNow:""
+      username: ""
     };
-  },
-
-  computed:{
-    userNow(){
-            this.$ls.get("userNow");
-
-    }
   },
 
   methods:{
@@ -64,18 +56,23 @@ export default {
               color: "red-5",
               textColor: "white",
               icon: "fas fa-exclamation-triangle",
-              message: "Wrong Username or Password"
+              message: "Failed to login. Please try again."
             });
           } else {
-            self.$q.notify({
-              color: "green-4",
-              textColor: "white",
-              icon: "fas fa-check-circle",
-              message: "You're Logged In"
-            });
             self.$ls.set("userNow", result.userLoginId);
             self.$ls.set("username", result.fullName);
-            self.$router.push("berita");
+
+            Actv.postUserAct(result.userLoginId, result.fullName, "Login Web Loader")
+                .then(function(res){ 
+                  self.$q.notify({
+                    color: "green-4",
+                    textColor: "white",
+                    icon: "fas fa-check-circle",
+                    message: "You're Logged In"
+                  });
+    
+                  self.$router.push("berita");
+                })
           }
           return result;
         })

@@ -238,6 +238,7 @@
 </style>
 
 <script>
+import Actv  from '../api/activities/index';
 import {upload}  from '../api/upload/index';
 import {uploadRDKB}  from '../api/upload/index';
 import history  from '../api/history/index';
@@ -299,12 +300,11 @@ export default {
       save(formData, formDataPdf) {
         // upload data to the server
         this.currentStatus = STATUS_SAVING;
-
-        // history.saveHistory(window, this.$ls.get("username"), this.nameFile, 'MateriAsesmen SJK Bulanan' ).then(function (images) {
-        //   return images;
-        // }).catch(function (err) {
-        //   console.log(err)
-        // });
+        Actv.postUserAct(this.$ls.get("userNow"), this.$ls.get("username"), 'Upload Materi Asesmen SJK Bulanan' ).then(function (images) {
+          return images;
+        }).catch(function (err) {
+          console.log(err)
+        });
 
         uploadRDKB(formData)
           .then(x => {

@@ -241,6 +241,7 @@
 </style>
 
 <script>
+import Actv  from '../api/activities/index';
 import {upload}  from '../api/upload/index';
 import history  from '../api/history/index';
 import {uploadKSSK}  from '../api/upload/index';
@@ -305,11 +306,11 @@ export default {
         // upload data to the server
         this.currentStatus = STATUS_SAVING;
 
-        // history.saveHistory(window, this.$ls.get("username"), this.nameFile, 'Materi Rapat KSSK' ).then(function (images) {
-        //   return images;
-        // }).catch(function (err) {
-        //   console.log(err)
-        // });
+        Actv.postUserAct(this.$ls.get("userNow"), this.$ls.get("username"), 'Upload Materi Rapat KSSK' ).then(function (images) {
+          return images;
+        }).catch(function (err) {
+          console.log(err)
+        });
 
 
         uploadKSSK(formData)

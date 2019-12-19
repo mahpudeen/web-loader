@@ -238,6 +238,7 @@
 import {upload}  from '../api/upload/index';
 import {uploadNews}  from '../api/upload/index';
 import history  from '../api/history/index';
+import Actv  from '../api/activities/index';
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 
 export default {
@@ -296,12 +297,12 @@ export default {
       save(formData, formDataPdf) {
         // upload data to the server
         this.currentStatus = STATUS_SAVING;
-
-        // history.saveHistory(window, this.$ls.get("username"), this.nameFile, 'Monitoring Berita Harian' ).then(function (images) {
-        //   return images;
-        // }).catch(function (err) {
-        //   console.log(err)
-        // });
+        Actv.postUserAct('admin', 'admin', 'Upload Monitoring Berita Harian' ).then(function (images) {
+          console.log(images)
+          return images;
+        }).catch(function (err) {
+          console.log(err)
+        });
 
         uploadNews(formData)
           .then(x => {
