@@ -7,7 +7,7 @@ Vue.use(VueResource)
 export default {
     getActv(){
         return getApiNoAuth()
-        .get('UserActivities')
+        .get('UserActivities/getUserActivities')
         .then(function (response){
             return response.data
         }).catch(function(err){
