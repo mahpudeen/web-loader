@@ -16,16 +16,6 @@
             :rules="[ val => val && val.length > 0 || 'Please type something']"
           />
 
-          <q-input
-            filled
-            v-model="password"
-            label="Password *"
-            hint="Your Password"
-            type="password"
-            lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Please type something']"
-          />
-
           <div>
             <q-btn label="Login" type="submit" color="black" />
             <q-btn label="Reset" type="reset" color="black" flat class="q-ml-sm" />
@@ -50,13 +40,12 @@ export default {
   data() {
     return {
       username: "",
-      password: "",
       userNow:""
     };
   },
 
   computed:{
-    userNoww(){
+    userNow(){
             this.$ls.get("userNow");
 
     }
@@ -67,48 +56,36 @@ export default {
     onSubmit() {
       let self = this;
 
-      // login_api
-      //   .getLogin(window, self.username, self.password)
-      //   .then(function(result) {
-      //     if (!result) {
-      //       self.$q.notify({
-      //         color: "red-5",
-      //         textColor: "white",
-      //         icon: "fas fa-exclamation-triangle",
-      //         message: "Wrong Username or Password"
-      //       });
-      //     } else {
-      //       self.$q.notify({
-      //         color: "green-4",
-      //         textColor: "white",
-      //         icon: "fas fa-check-circle",
-      //         message: "You're Logged In"
-      //       });
-      //       self.$ls.set("userNow", result.id);
-      //       self.$ls.set("username", result.username);
-      //       self.$router.push("berita");
-      //     }
-      //     return result;
-      //   })
-      //   .catch(function(err) {
-      //     console.log(err);
-      //   });
-
-      self.$q.notify({
+      login_api
+        .getLogin(window, self.username)
+        .then(function(result) {
+          if (!result) {
+            self.$q.notify({
+              color: "red-5",
+              textColor: "white",
+              icon: "fas fa-exclamation-triangle",
+              message: "Wrong Username or Password"
+            });
+          } else {
+            self.$q.notify({
               color: "green-4",
               textColor: "white",
               icon: "fas fa-check-circle",
               message: "You're Logged In"
             });
-            self.$ls.set("userNow", 'admin');
-            self.$ls.set("username", 'admin');
+            self.$ls.set("userNow", result.userLoginId);
+            self.$ls.set("username", result.fullName);
             self.$router.push("berita");
-
+          }
+          return result;
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
     },
 
     onReset() {
       this.username = null;
-      this.password = null;
     }
   }
 }
