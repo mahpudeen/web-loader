@@ -276,13 +276,6 @@ export default {
       },
       isFailed() {
         return this.currentStatus === STATUS_FAILED;
-      },
-      getImage() {
-        images.getAllImage(window, this.id).then(function (images) {
-          return images.config.url;
-        }).catch(function (err) {
-          console.log(err)
-        });
       }
     },
     methods: {
