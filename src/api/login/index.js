@@ -7,11 +7,11 @@ Vue.use(VueResource)
 export default {
     getLogin(window, username, password){
         return getApiNoAuth()
-        .get('http://localhost/api/DataUsers/findOne?filter=%7B%22where%22%3A%7B%22userLoginId%22%3A%22'+username+'%22%7D%7D')
+        .get('DataUsers/findOne?filter=%7B%22where%22%3A%7B%22userLoginId%22%3A%22'+username+'%22%7D%7D')
         .then(function (response){
             console.log(response)
             return response.data
-        }).catch(function(err){
+        }).catch(function(err){ss
             console.log(err)
         })
     }
