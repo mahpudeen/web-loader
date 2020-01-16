@@ -57,12 +57,12 @@ function uploadKSSK(formData) {
   }
 
   function uploadDataManual(formData) {
-    const url = `${BASE_URL_DATAMANUAL}/edw/upload`;
+    const url = `${BASE_URL_DATAMANUAL}/manual3/upload`;
     return axios.post(url, formData)
       .then(x => x.data)
       // add url field
       .then(x => x.map(img => Object.assign({},
-        img, { url: `${BASE_URL_DATAMANUAL}/edw/${img.id}` })));
+        img, { url: `${BASE_URL_DATAMANUAL}/manual3/${img.id}` })));
   }
 
 export { upload, uploadKSSK, uploadNews, uploadRDKB, uploadRDKM, uploadDataManual }

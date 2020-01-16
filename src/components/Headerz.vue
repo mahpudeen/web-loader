@@ -61,15 +61,15 @@
             <q-item-label caption>Upload Data RDKM</q-item-label>
           </q-item-section>
         </q-item>
-        <!-- <q-item clickable tag="a" href="/#/history">
+        <q-item clickable tag="a" href="/#/data-manual">
           <q-item-section avatar>
-            <q-icon name="history" />
+            <q-icon name="cloud_upload" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>History</q-item-label>
-            <q-item-label caption>History Upload</q-item-label>
+            <q-item-label>Upload Manual</q-item-label>
+            <q-item-label caption>Upload Manual</q-item-label>
           </q-item-section>
-        </q-item> -->
+        </q-item>
         <q-item clickable tag="a" href="/#/history-audit-trail">
           <q-item-section avatar>
             <q-icon name="history" />

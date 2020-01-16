@@ -4,26 +4,14 @@
       <div class="q-pa-md" style="max-width: 500px; width:100%">
         <h4 style="text-align:center;">Upload Data Manual</h4>
         <q-form class="q-gutter-md">
-  
-          <q-input
-            filled
-            v-model="nameFile"
-            label="Nama File"
-            hint="Contoh: 2016-12-01 Monitoring Berita Harian 10 September 2019"
-            lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Please type something']"
-          />
-           
+            
           <div class="modal-body">
                 <!--UPLOAD-->
             <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
               <div>
                 <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept=".xls, .xlsx" class="dropbox">
                 <p v-if="isInitial">
-                  Drag your excel data file(s) here to begin
-                </p>
-                <p v-if="isSaving">
-                  Uploading {{ fileCount }} files...
+                  Drag your image file(s) into the box to begin
                 </p>
               </div>
             </form>
@@ -33,9 +21,8 @@
               </p>
             </div>
           </div>
-
           <div>
-            <q-btn label="Submit" type="submit" color="black" />
+            <q-btn label="Submit" type="submit" color="black" @click="submit(waitedFormData)"/>
             <q-btn label="Reset" type="reset" color="black" flat class="q-ml-sm" @click="reset"/>
           </div>
         </q-form>
@@ -67,10 +54,7 @@
 
   .input-file {
     opacity: 0; /* invisible but it's there! */
-    width: 100%;
-    height: 200px;
-    position: absolute;
-    cursor: pointer;
+    
   }
 
   .dropbox:hover {
@@ -221,10 +205,9 @@
 </style>
 
 <script>
+
+import {uploadDataManual}  from '../api/upload/index';
 import Actv  from '../api/activities/index';
-import {upload}  from '../api/upload/index';
-import {uploadNews}  from '../api/upload/index';
-import history  from '../api/history/index';
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 
 export default {
@@ -233,14 +216,12 @@ export default {
 
   data() {
     return {
-      lorem: "",
-      ipsum: "",
       uploadedFiles: [],
-      uploadError: null,
-      currentStatus: null,
-      uploadFieldName: 'photos',
+      uploadError: "",
+      currentStatus: "",
       name : 'testing',
       string : 'string',
+      uploadFieldName: 'photos',
       nameFile : '',
       waitedFormData: '',
       waitedFormDataPdf: ''
@@ -266,24 +247,21 @@ export default {
     },
     methods: {
         reset() {
-        // reset form to initial state
         this.currentStatus = STATUS_INITIAL;
         this.uploadedFiles = [];
         this.uploadError = null;
         this.nameFile = ''
       },
 
-      save(formData, formDataPdf) {
-        // upload data to the server
+      save(formData) {
         this.currentStatus = STATUS_SAVING;
-
-        Actv.postUserAct(this.$ls.get("userNow"), this.$ls.get("username"), 'Upload Monitoring Berita Harian' ).then(function (images) {
+        Actv.postUserAct('admin', 'admin', 'Upload Manual Data' ).then(function (images) {
           return images;
         }).catch(function (err) {
           console.log(err)
         });
 
-        uploadNews(formData)
+        uploadDataManual(formData)
           .then(x => {
             this.uploadedFiles = [].concat(x);
             this.currentStatus = STATUS_SUCCESS;
@@ -292,67 +270,24 @@ export default {
             this.uploadError = err.response;
             this.currentStatus = STATUS_FAILED;
           });
-
-        uploadNews(formDataPdf)
-        .then(x => {
-          this.uploadedFiles = [].concat(x);
-          this.currentStatus = STATUS_SUCCESS;
-        })
-        .catch(err => {
-          this.uploadError = err.response;
-          this.currentStatus = STATUS_FAILED;
-        });
       },
 
       filesChange(fieldName, fileList) {
-        
-        // handle file changes
         const formData = new FormData();
-
         if (!fileList.length) return;
-
-        // append the files to FormData
         Array
           .from(Array(fileList.length).keys())
           .map(x => {
-            let newNameFile = this.nameFile + '.jpg'
-            formData.append(fieldName, fileList[x], newNameFile);
+            formData.append(fieldName, fileList[x], fileList[x].name);
           });
-
-        // save it
-
         this.waitedFormData = formData
       },
-
-      filesChangePdf(fieldName, fileList) {
-        
-        // handle file changes
-        const formData = new FormData();
-
-        if (!fileList.length) return;
-
-        // append the files to FormData
-        Array
-          .from(Array(fileList.length).keys())
-          .map(x => {
-            let newNameFile = this.nameFile + '.pdf'
-            formData.append(fieldName, fileList[x], newNameFile);
-          });
-
-        // save it
-
-        this.waitedFormDataPdf = formData
-      },
-      submit(waitedFormData, waitedFormDataPdf) {
-        
-        this.save(waitedFormData, waitedFormDataPdf);
+      submit(waitedFormData) {       
+        this.save(waitedFormData);
       }
     },
     mounted() {
       this.reset();
     },
-
-
-
 };
 </script>
