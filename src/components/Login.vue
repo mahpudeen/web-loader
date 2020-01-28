@@ -81,7 +81,6 @@ export default {
                     icon: "fas fa-check-circle",
                     message: "You're Logged In"
                   });
-    
                   self.$router.push("berita");
                 })
             }
