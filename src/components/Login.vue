@@ -69,11 +69,12 @@ export default {
               message: "Failed to login. Check your name or password."
             });
           } else {
-            if(result.role===13){
+            console.log(result.userInfo.position)
+            if(result.userInfo.position==='gdst'){
             self.$ls.set("userNow", result.userLoginId);
             self.$ls.set("username", result.fullName);
 
-            Actv.postUserAct(result.userLoginId, result.fullName, "Login Web Loader")
+            Actv.postUserAct(result.userInfo.datauserLoginId,"", "Login Web Loader")
                 .then(function(res){ 
                   self.$q.notify({
                     color: "green-4",
@@ -85,7 +86,6 @@ export default {
                 })
             }
             else{
-              onReset();
               self.$q.notify({
                 color: "red-5",
                 textColor: "white",
@@ -100,7 +100,6 @@ export default {
           console.log(err);
         });
     },
-
     onReset() {
       this.username = null;
       this.password = null;
