@@ -14,6 +14,15 @@
             lazy-rules
             :rules="[ val => val && val.length > 0 || 'Please type something']"
           />
+           <q-input
+            filled
+            v-model="password"
+            label="Password *"
+            hint="Your Password"
+            type="password"
+            lazy-rules
+            :rules="[ val => val && val.length > 0 || 'Please type something']"
+          />
 
           <div>
             <q-btn label="Login" type="submit" color="black" />
@@ -39,7 +48,8 @@ export default {
 
   data() {
     return {
-      username: ""
+      username: "",
+      password: ""
     };
   },
 
@@ -49,16 +59,17 @@ export default {
       let self = this;
 
       login_api
-        .getLogin(window, self.username)
+        .getLogin(window, self.username,self.password)
         .then(function(result) {
           if (!result) {
             self.$q.notify({
               color: "red-5",
               textColor: "white",
               icon: "fas fa-exclamation-triangle",
-              message: "Failed to login. Please try again."
+              message: "Failed to login. Check your name or password."
             });
           } else {
+            if(result.role===13){
             self.$ls.set("userNow", result.userLoginId);
             self.$ls.set("username", result.fullName);
 
@@ -73,6 +84,16 @@ export default {
     
                   self.$router.push("berita");
                 })
+            }
+            else{
+              onReset();
+              self.$q.notify({
+                color: "red-5",
+                textColor: "white",
+                icon: "fas fa-exclamation-triangle",
+                message: "You don't authorized to access pages."
+              });
+            }
           }
           return result;
         })
@@ -83,6 +104,7 @@ export default {
 
     onReset() {
       this.username = null;
+      this.password = null;
     }
   }
 }
