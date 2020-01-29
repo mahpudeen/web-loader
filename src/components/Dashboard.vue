@@ -26,7 +26,7 @@ export default {
         Areloaded(){
             setTimeout(function () {
                         location.reload(true)
-                    }, 60000);
+                    }, 900000);
         }
     },
     beforeCreate() {

@@ -367,7 +367,7 @@ export default {
       reloaded(){
         setTimeout(function () {
                         location.reload(true)
-                    }, 60000)
+                    }, 900000)
       },
 
       beforeDestroy () {
