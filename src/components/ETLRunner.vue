@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable vue/return-in-computed-property */
 <template>
 
  <div class="q-pa-md q-gutter-md">
@@ -65,7 +67,7 @@
             
             </q-list>
 
-            <iframe style="width: 100%" src="http://10.225.125.136:4022/app/kibana#/dashboard/331d58b0-db62-11e9-9b4f-8f3f22f52686?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow-90d%2Cmode%3Aquick%2Cto%3Anow))" height="600" width="800"></iframe>
+            <iframe id="frameId" style="width: 100%" src="http://10.225.125.136:4022/app/kibana#/dashboard/331d58b0-db62-11e9-9b4f-8f3f22f52686?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow-90d%2Cmode%3Aquick%2Cto%3Anow))" height="600" width="800"></iframe>
 
              <q-dialog v-model="basic" transition-show="fade" transition-hide="fade">
                 <q-card>
@@ -345,29 +347,35 @@ export default {
     },
 
     methods: {
-        closePopUp() {
-          this.basic = false
-        },
+      closePopUp() {
+        this.basic = false
+      },
 
-        startComputing (id) {
-          this[`loading${id}`] = true
-          this[`percentage${id}`] = 0
-          this[`interval${id}`] = setInterval(() => {
-            this[`percentage${id}`] += Math.floor(Math.random() * 8 + 20)
-            if (this[`percentage${id}`] >= 100) {
-              clearInterval(this[`interval${id}`])
-              this[`loading${id}`] = false
-              this.$router.go('/ETL-Runner');
-            }
-          }, 700)
-        },
+      startComputing (id) {
+        this[`loading${id}`] = true
+        this[`percentage${id}`] = 0
+        this[`interval${id}`] = setInterval(() => {
+          this[`percentage${id}`] += Math.floor(Math.random() * 8 + 20)
+          if (this[`percentage${id}`] >= 100) {
+            clearInterval(this[`interval${id}`])
+            this[`loading${id}`] = false
+            this.$router.go('/ETL-Runner');
+          }
+        }, 700)
+      },
 
-        beforeDestroy () {
-          clearInterval(this.interval1)
-          clearInterval(this.interval2)
-        },
+      reloaded(){
+        setTimeout(function () {
+                        location.reload(true)
+                    }, 60000)
+      },
 
-        reset() {
+      beforeDestroy () {
+        clearInterval(this.interval1)
+        clearInterval(this.interval2)
+      },
+
+      reset() {
         // reset form to initial state
         this.currentStatus = STATUS_INITIAL;
         this.uploadedFiles = [];
@@ -376,16 +384,13 @@ export default {
       },
 
       runner(Taskname, id, type) {
-
         if (type === 'Manual') {
           this.basic = true;
           this.TaskName = Taskname;
           
         } else if (type === 'Otomatis') {
           let self = this
-
           self.startComputing(id)
-
           etl.changeFlag(Taskname).then(function (result) {
             return result;
           }).catch(function (err) {
@@ -396,36 +401,27 @@ export default {
 
       changeFlag(Taskname) {
           let self = this
-
           self.startComputing(2)
-
           etl.changeFlag(Taskname).then(function (result) {
-            
-             this.currentStatus = STATUS_INITIAL;
+            this.currentStatus = STATUS_INITIAL;
             this.uploadedFiles = [];
             this.uploadError = null;
             this.nameFile = ''
-            return result;
-             
+            return result;    
           }).catch(function (err) {
             console.log(err)
           });
       },
 
-
-      
-
       save(formData) {  
         // upload data to the server
         this.currentStatus = STATUS_SAVING;
-
         history.saveHistory(window, this.$ls.get("username"), this.nameFile, 'Monitoring Berita Harian' ).then(function (images) {
           this.basic = false
           return images;
         }).catch(function (err) {
           console.log(err)
         });
-
         uploadDataManual(formData)
           .then(x => {
             this.uploadedFiles = [].concat(x);
@@ -434,18 +430,13 @@ export default {
           .catch(err => {
             this.uploadError = err.response;
             this.currentStatus = STATUS_FAILED;
-          });
-
-          
+          });          
       },
 
-      filesChange(fieldName, fileList) {
-        
+      filesChange(fieldName, fileList) {   
         // handle file changes
         const formData = new FormData();
-
         if (!fileList.length) return;
-
         // append the files to FormData
         Array
           .from(Array(fileList.length).keys())
@@ -454,16 +445,11 @@ export default {
             this.nameFile = nameFile
             formData.append(fieldName, fileList[x], nameFile);
           });
-
-        // save it
-
         this.waitedFormData = formData
       },
 
-      submit(waitedFormData) {
-        
-        this.save(waitedFormData);
-       
+      submit(waitedFormData) {        
+        this.save(waitedFormData);       
       },
 
       getDatas() {
@@ -472,11 +458,10 @@ export default {
         }).catch(function (err) {
             console.log(err)
         });
-      }
-        
+      }        
     },
 
-    computed: {
+    computed: {    
       isInitial() {
         return this.currentStatus === STATUS_INITIAL;
       },
@@ -489,17 +474,8 @@ export default {
       isFailed() {
         return this.currentStatus === STATUS_FAILED;
       },
-      getImage() {
-        images.getAllImage(window, this.id).then(function (images) {
-          return images.config.url;
-        }).catch(function (err) {
-          console.log(err)
-        });
-      },
-
       getData() {
         const self = this;
-
         etl.getETLDatas(window).then(function (result) {
             return result;
         }).then(function (datas) {
@@ -522,10 +498,11 @@ export default {
         }).catch(function (err) {
             console.log(err)
         });
-  },
-   mounted() {
-      this.reset();
-      this.$set(this, 'data', this.getDatas())
     },
+   mounted() {
+      this.reset()
+      this.$set(this, 'data', this.getDatas())   
+      this.reloaded();
+    }
 }
 </script>
