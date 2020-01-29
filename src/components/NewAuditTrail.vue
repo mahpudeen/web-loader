@@ -90,7 +90,6 @@ export default {
         return result;
       })
       .then(function(datas) {
-        console.log("ini datas", datas);
         self.data = datas;
         return datas;
       })

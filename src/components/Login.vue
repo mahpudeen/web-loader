@@ -69,12 +69,12 @@ export default {
               message: "Failed to login. Check your name or password."
             });
           } else {
-            console.log(result.userInfo.position)
+            
             if(result.userInfo.position==='gdst'){
-            self.$ls.set("userNow", result.userLoginId);
-            self.$ls.set("username", result.fullName);
+            self.$ls.set("userNow", result.userInfo.userLoginId);
+            self.$ls.set("username", result.userInfo.fullName);
 
-            Actv.postUserAct(result.userInfo.datauserLoginId,"", "Login Web Loader")
+            Actv.postUserAct("",result.userInfo.userLoginId, "Login Web Loader")
                 .then(function(res){ 
                   self.$q.notify({
                     color: "green-4",
@@ -97,7 +97,12 @@ export default {
           return result;
         })
         .catch(function(err) {
-          console.log(err);
+           self.$q.notify({
+                color: "red-5",
+                textColor: "white",
+                icon: "fas fa-exclamation-triangle",
+                message: "Ouch! Our Function Failed to Fetch Some Data. Poor Me"
+              });
         });
     },
     onReset() {

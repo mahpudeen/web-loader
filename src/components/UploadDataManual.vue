@@ -258,7 +258,7 @@ export default {
         Actv.postUserAct('admin', 'admin', 'Upload Manual Data' ).then(function (images) {
           return images;
         }).catch(function (err) {
-          console.log(err)
+        
         });
 
         uploadDataManual(formData)

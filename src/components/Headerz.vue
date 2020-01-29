@@ -122,6 +122,7 @@
 </div>
 </template>
 <script>
+import Actv  from '../api/activities/index';
 export default {
   data () {
     return {
@@ -131,6 +132,7 @@ export default {
 
   methods:{
     logout(){
+       Actv.postUserAct("",this.$ls.get("userNow"), "Logout Web Loader")
       this.$ls.remove("userNow")
       this.$router.push("/")
     }

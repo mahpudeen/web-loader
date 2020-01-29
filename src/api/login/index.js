@@ -13,12 +13,8 @@ export default {
         .post('/auth/ldap?username='+username+'&password='+password+'&ts='+ts)
  //       .get('DataUsers/findOne?filter=%7B%22where%22%3A%7B%22userLoginId%22%3A%22'+username+'%22%7D%7D')
         .then(function (response){
-            console.log('adadasd')
-            console.log(response)
             return response.data
         }).catch(function(err){
-            console.log('GAGAL')
-            console.log(err)
         })
     },
     dateToString (dateValue, format, language) {

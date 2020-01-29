@@ -305,7 +305,6 @@ export default {
       role.getDataRoles(window).then(function (result) {
         return result;
       }).then(function (datas) {
-        console.log(datas)
         for (let i=0; i < datas.length; i++) {
           self.options.push(datas[i]);
         }
