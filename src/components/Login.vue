@@ -62,12 +62,15 @@ export default {
         .getLogin(window, self.username,self.password)
         .then(function(result) {
           if (!result) {
-            self.$q.notify({
-              color: "red-5",
-              textColor: "white",
-              icon: "fas fa-exclamation-triangle",
-              message: "Failed to login. Check your name or password."
-            });
+            Actv.postUserAct("",self.username, "Tried to login")
+                .then(function(res){ 
+                    self.$q.notify({
+                      color: "red-5",
+                      textColor: "white",
+                      icon: "fas fa-exclamation-triangle",
+                      message: "unfortunately failed to login. Check username or password."
+                    });
+               })
           } else {
             
             if(result.userInfo.position==='gdst'){
