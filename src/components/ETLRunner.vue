@@ -1,10 +1,6 @@
-/* eslint-disable no-console */
-/* eslint-disable vue/return-in-computed-property */
 <template>
 
  <div class="q-pa-md q-gutter-md">
-
-
             <q-list bordered class="rounded-borders" style="max-width: 100%">
                 
             <q-item-label header>ETL Data Runner</q-item-label>
@@ -49,22 +45,17 @@
                                 <span class="cursor-pointer">{{item.ExcelFileName}}</span>
                             </q-item-label>
                         </q-item-section>
-
     
                         <q-item-section top side>
-                        <div class="text-grey-7 q-gutter-xs">
-                           
+                        <div class="text-grey-7 q-gutter-xs">             
                             <!-- <q-btn v-if="item.DataSourceType === 'Manual'" class="gt-xs" size="12px" flat dense round icon="cloud_upload" @click="basic = true" />
                             <q-btn v-if="item.DataSourceType === 'Otomatis'" class="gt-xs" size="12px" flat dense round icon="cloud_upload" @click="basic = true" hidden/> -->
                             <q-btn v-if="item.ProcessFlag === '0'" :loading="loading2" :percentage="percentage2" class="gt-xs" size="16px" flat dense round icon="play_circle_filled" @click="runner(item.TaskName, 2, item.DataSourceType)"/>
                             <q-btn v-if="item.ProcessFlag === '1'" :loading="loading2" :percentage="percentage2" class="gt-xs" size="16px" flat dense round icon="play_circle_filled" @click="runner(item.TaskName, 2, item.DataSourceType)" disable/>
-                            <q-btn size="12px" flat dense round icon="more_vert" />
-                        </div>
-            
+                        </div>         
                         </q-item-section>
                     </q-item>
-                </div>
-            
+                </div>    
             </q-list>
 
             <iframe id="frameId" style="width: 100%" src="http://10.225.125.136:4022/app/kibana#/dashboard/331d58b0-db62-11e9-9b4f-8f3f22f52686?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow-90d%2Cmode%3Aquick%2Cto%3Anow))" height="600" width="800"></iframe>
@@ -108,14 +99,9 @@
                                     </p>
                                     </div>
                                 </div>
-
-    
-                                </q-form>
+                               </q-form>
                             </div>
                             </div>
-
-                            
-                
                     <q-card-actions align="right">
                         <q-btn flat label="Cancel" color="black" @click="closePopUp()"/>
                         <q-btn v-if="isInitial" flat label="Upload" type="submit" :loading="loading2" :percentage="percentage2" color="black" @click="submit(waitedFormData)" />
@@ -306,7 +292,7 @@
 
 
 <script>
-import {upload}  from '../api/upload/index';
+
 import {uploadDataManual}  from '../api/upload/index';
 import history  from '../api/history/index';
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
