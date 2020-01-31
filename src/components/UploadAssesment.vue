@@ -242,8 +242,6 @@
 
 <script>
 import Actv  from '../api/activities/index';
-import {upload}  from '../api/upload/index';
-import history  from '../api/history/index';
 import {uploadKSSK}  from '../api/upload/index';
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 
@@ -299,7 +297,7 @@ export default {
         // upload data to the server
         this.currentStatus = STATUS_SAVING;
 
-        Actv.postUserAct(this.$ls.get("userNow"), this.$ls.get("username"), 'Upload Materi Rapat KSSK' ).then(function (images) {
+        Actv.postUserAct("Web Loader",this.$ls.get("userNow"), 'Upload Materi Rapat KSSK' ).then(function (images) {
           return images;
         }).catch(function (err) {
           console.log(err)

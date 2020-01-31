@@ -280,7 +280,6 @@ export default {
     },
     methods: {
         reset() {
-        // reset form to initial state
         this.currentStatus = STATUS_INITIAL;
         this.uploadedFiles = [];
         this.uploadError = null;
@@ -288,15 +287,11 @@ export default {
       },
 
       save(formData, formDataPdf) {
-        // upload data to the server
         this.currentStatus = STATUS_SAVING;
-        Actv.postUserAct('admin', 'admin', 'Upload Monitoring Berita Harian' ).then(function (images) {
-          console.log(images)
+        Actv.postUserAct("Web Loader", this.$ls.get("userNow"), 'Upload Monitoring Berita Harian' ).then(function (images) {
           return images;
         }).catch(function (err) {
-          console.log(err)
         });
-
         uploadNews(formData)
           .then(x => {
             this.uploadedFiles = [].concat(x);
@@ -306,7 +301,6 @@ export default {
             this.uploadError = err.response;
             this.currentStatus = STATUS_FAILED;
           });
-
         uploadNews(formDataPdf)
         .then(x => {
           this.uploadedFiles = [].concat(x);
@@ -317,44 +311,26 @@ export default {
           this.currentStatus = STATUS_FAILED;
         });
       },
-
       filesChange(fieldName, fileList) {
-        
-        // handle file changes
         const formData = new FormData();
-
         if (!fileList.length) return;
-
-        // append the files to FormData
         Array
           .from(Array(fileList.length).keys())
           .map(x => {
             let newNameFile = this.nameFile + '.jpg'
             formData.append(fieldName, fileList[x], newNameFile);
           });
-
-        // save it
-
         this.waitedFormData = formData
       },
-
       filesChangePdf(fieldName, fileList) {
-        
-        // handle file changes
         const formData = new FormData();
-
         if (!fileList.length) return;
-
-        // append the files to FormData
         Array
           .from(Array(fileList.length).keys())
           .map(x => {
             let newNameFile = this.nameFile + '.pdf'
             formData.append(fieldName, fileList[x], newNameFile);
           });
-
-        // save it
-
         this.waitedFormDataPdf = formData
       },
       submit(waitedFormData, waitedFormDataPdf) {
@@ -365,8 +341,5 @@ export default {
     mounted() {
       this.reset();
     },
-
-
-
 };
 </script>

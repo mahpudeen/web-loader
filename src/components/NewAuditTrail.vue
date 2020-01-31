@@ -79,6 +79,9 @@ export default {
         date.getDate() +
         ".csv"
       );
+    },
+    Areloaded(){
+       Actv.postUserAct("Web Loader", this.$ls.get("userNow"), 'Buka Audit Trail' )
     }
   },
 
@@ -96,6 +99,10 @@ export default {
       .catch(function(err) {
         console.log(err);
       });
-  }
+  },
+
+  mounted() {
+      this.Areloaded()
+    }
 };
 </script>

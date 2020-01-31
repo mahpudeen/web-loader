@@ -132,7 +132,7 @@ export default {
 
   methods:{
     logout(){
-       Actv.postUserAct("",this.$ls.get("userNow"), "Logout Web Loader")
+       Actv.postUserAct("Web Loader",this.$ls.get("userNow"), "Logout Web Loader")
       this.$ls.remove("userNow")
       this.$router.push("/")
     }

@@ -384,7 +384,6 @@
 <script>
 
 import history  from '../api/history/index';
-import user  from '../api/user/index';
 import account  from '../api/account/index';
 import addNewUser from './AddNewUser';
 import Actv  from '../api/activities/index';
@@ -453,10 +452,12 @@ export default {
       },
       updateDataUser() {
         let self = this
-        console.log(this.role, this.position, this.userLoginId)
+
         account.updateRole(this.role, this.position, this.userLoginId)
         .then(function(result){
-          console.log(result)
+           Actv.postUserAct("Web Loader",this.$ls.get("userNow"),"Update User "+this.userLoginId)
+                .then(function(result){
+                 });
           self.$router.go('/user-management')
         }).catch(function (err) {
           console.log(err)
@@ -481,12 +482,12 @@ export default {
         let self = this
         account.deleteAccount(userLoginId).then(function (result) {
           if (result) {
-          Actv.postUserAct(userLoginId,localStorage.getItem("username"),"Delete User")
+          Actv.postUserAct("Web Loader",localStorage.getItem("username"),"Delete User"+this.userLoginId)
                 .then(function(result){
                  });
             self.$router.go("/user-management");
           } else {
-          Actv.postUserAct(userLoginId,localStorage.getItem("username"),"Failed Delete User")
+          Actv.postUserAct("Web Loader",localStorage.getItem("username"),"Failed Delete User")
                 .then(function(result){
                  });
           }

@@ -180,7 +180,6 @@
 </style>
 <script>
 
-import history  from '../api/history/index';
 import kuser  from '../api/user/index';
 import role  from '../api/roles/index';
 import account  from '../api/account/index';
@@ -268,7 +267,7 @@ export default {
                   message: 'Submitted'
                 })
 //                Actv.postUserAct(self.username,localStorage.getItem("userNow"),"Create User")
-                Actv.postUserAct(self.username,self.$ls.get("username"),"Create User")
+                Actv.postUserAct("Web Loader",self.$ls.get("userNow"),"Create User "+self.username)
                 .then(function(result){
                   if(result){
                     self.$router.go("/user-management");
@@ -288,6 +287,7 @@ export default {
                   icon: 'warning',
                   message: 'Cannot register a User for while, please try again'
                 })
+                 Actv.postUserAct("Web Loader",self.$ls.get("userNow"),"Failed Create User ")
             }
           }
 

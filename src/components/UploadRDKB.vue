@@ -239,15 +239,12 @@
 
 <script>
 import Actv  from '../api/activities/index';
-import {upload}  from '../api/upload/index';
 import {uploadRDKB}  from '../api/upload/index';
-import history  from '../api/history/index';
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 
 export default {
   name: "UploadAssesment",
   
-
   data() {
     return {
       lorem: "",
@@ -261,11 +258,8 @@ export default {
       nameFile : '',
       waitedFormData: '',
       waitedFormDataPdf: ''
-
-
     };
   },
-
 
   computed: {
       isInitial() {
@@ -293,7 +287,7 @@ export default {
       save(formData, formDataPdf) {
         // upload data to the server
         this.currentStatus = STATUS_SAVING;
-        Actv.postUserAct(this.$ls.get("userNow"), this.$ls.get("username"), 'Upload Materi Asesmen SJK Bulanan' ).then(function (images) {
+        Actv.postUserAct("Web Loader", this.$ls.get("userNow"), 'Upload Materi Asesmen SJK Bulanan' ).then(function (images) {
           return images;
         }).catch(function (err) {
           console.log(err)

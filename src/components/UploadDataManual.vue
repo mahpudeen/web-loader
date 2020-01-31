@@ -255,7 +255,7 @@ export default {
 
       save(formData) {
         this.currentStatus = STATUS_SAVING;
-        Actv.postUserAct('admin', 'admin', 'Upload Manual Data' ).then(function (images) {
+        Actv.postUserAct("Web Loader", this.$ls.get("userNow"), 'Upload Manual Data' ).then(function (images) {
           return images;
         }).catch(function (err) {
         

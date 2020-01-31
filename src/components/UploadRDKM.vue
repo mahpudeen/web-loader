@@ -242,9 +242,7 @@
 
 <script>
 import Actv  from '../api/activities/index';
-import {upload}  from '../api/upload/index';
 import {uploadRDKM}  from '../api/upload/index';
-import history  from '../api/history/index';
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 
 export default {
@@ -297,7 +295,7 @@ export default {
         // upload data to the server
         this.currentStatus = STATUS_SAVING;
 
-        Actv.postUserAct(this.$ls.get("userNow"), this.$ls.get("username"), 'Upload Market Update Harian' ).then(function (images) {
+        Actv.postUserAct("Web Loader", this.$ls.get("userNow"), 'Upload Market Update Harian' ).then(function (images) {
           return images;
         }).catch(function (err) {
           console.log(err)
